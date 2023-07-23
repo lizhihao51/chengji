@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+/* 表示将所有元素的外边距和内边距设为0 */
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body,html {
+	height:100%; /* 它将页面的高度设置为100% */
+	background-image:url(../img/login-bg.jpg); /*设置背景图片*/
+	background-repeat:no-repeat;/*背景重复设置为不重复*/
+	background-size:cover;/*背景大小设置为覆盖整个元素*/
+	font-size:18px;/*字体大小18px*/
+	color:white;/*文本颜色设为白色*/
+}
+#head{
+	height:8%;/*元素的高度设置为父元素的8%。*/
+}
+#kuang{
+	background-color:rgba(255,255,255,0.9);/*元素的背景颜色设置为具有90%不透明度的白色*/
+}
+#top{
+	text-align:center;/*元素的文本内容居中对齐*/
+}
+#times{
+	float:left;/*元素向左浮动*/
+}
+
+#tit{
+	font-size:26px;/*元素的字体大小设置为26px*/
+}
+#tuichu{
+	float:right;/*元素向右浮动*/
+	font-size:16px;/*大小设置为16px*/
+}
+a{
+	text-decoration:none;/*将所有链接元素的文本装饰设为无*/
+	color:white;/*文本颜色设为白色*/
+}

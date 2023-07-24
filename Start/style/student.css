@@ -22,8 +22,8 @@ body {
 	background-repeat: no-repeat;
 }
 #left {
-	width:20%;
-	height: 100%;
+	width:15%;
+	height: 90%;
 	padding-top: 48px;
 	margin-left: 10px;
 	float: left;
@@ -31,9 +31,9 @@ body {
 	margin-right:15px;
 }
 #right {
-	width:77%;
-	padding-right:1%;
-	height: 100%;
+	width:79%;
+	padding-right:3%;
+	height: 97%;
 	overflow: hidden;
 	float: left;
 	background-color:rgba(255,255,255,0.3);
@@ -47,8 +47,8 @@ body {
 	height: 100%;
 	overflow: hidden;
 	margin: 0px auto;
-	/*padding: 20px;*/
-	/*padding-right:0px;*/
+	padding: 20px;
+	padding-right:20px;
 }
 iframe{
 	width:100%;
@@ -58,7 +58,7 @@ iframe{
 	background-color:green;
 	cursor:pointer;
 	text-align:center;
-	width:200px;
+	width:150px;
 	height:50px;
 	margin-bottom:20px;
 	line-height:50px;

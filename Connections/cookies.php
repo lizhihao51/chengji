@@ -18,12 +18,10 @@ if(!isset($_COOKIE['admin'])){
     echo '<script>alert("账号或密码不能留空");history.go(-1);</script>';
 	}
 	else if ($row) {
-		echo "成功";
 			setcookie("admin",$cookie,time()+3600,'/');
 			echo"<script>url=\"../index.php\";window.location.href=url;</script>";
 		} 
 		else {
-			echo "登录失败!<br>";
 			echo"<script>alert(\"没有注册,或账号或密码错误\");</script>";
 			echo"<script>url=\"../login.php\";window.location.href=url;</script>";
 		}
@@ -33,7 +31,6 @@ if(!isset($_COOKIE['admin'])){
 else
 {
 //有cookies
-echo "有<br>";
 	if(!isset($_POST['exit']))
 		{
 	//没有点退出
@@ -46,8 +43,7 @@ echo "有<br>";
 			//点了退出
 		
 				setcookie('admin', $row1['username'], time()-3600,'/');
-				//header ('Location: index.php');
-				echo "已经退出\n";
+				echo "<script>alert(\"已经退出\");</script>";
 		}		
 }
 ?>

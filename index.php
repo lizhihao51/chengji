@@ -8,16 +8,14 @@
 </head>
 
 <body>
-<div id="top">
-	<span id="times"></span>
-	<span id="tit">欢迎使用成绩管理系统</span>
-    <a id="tuichu" href="Connections/exit.php">安全退出&nbsp;</a>
+<div id="bg">
+	<div id="top">
+		<a id="tuichu" href="Connections/exit.php">安全退出&nbsp;</a>
+		<div class="tit">欢迎使用成绩管理系统</div>
+	</div>
+	<iframe id ="kuang" src="" width="100%" height="90%" scrolling="auto" frameborder="0">
+	</iframe>
 </div>
-
-<div id="head">
-</div>
-<iframe id="kuang" src="" width="100%" height="90%" scrolling="auto" frameborder="0">
-</iframe>
 </body>
 </html>
 

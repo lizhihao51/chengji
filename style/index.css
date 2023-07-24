@@ -14,22 +14,41 @@ body,html {
 	font-size:18px;/*字体大小18px*/
 	color:white;/*文本颜色设为白色*/
 }
-#head{
-	height:8%;/*元素的高度设置为父元素的8%。*/
-}
-#kuang{
-	background-color:rgba(255,255,255,0.9);/*元素的背景颜色设置为具有90%不透明度的白色*/
+#bg{
+	background-color:rgba(255,255,255,0.5);/*元素的背景颜色设置为具有90%不透明度的白色*/
 }
 #top{
 	text-align:center;/*元素的文本内容居中对齐*/
 }
-#times{
-	float:left;/*元素向左浮动*/
+.tit{
+	margin-bottom: 10px; /* 下边框的边距为10像素 */
+	font-size:26px;/*元素的字体大小设置为26px*/
+
+	/* 字体默认颜色，边距，间距 */
+	color: #ffffff;
+	text-shadow: 0.05em 0.05em 0 #868686, -0.05em 0.05em 0 #868686,0 0.05em 0 #868686;
+	padding: 1.5vmin 2vmin;
+	letter-spacing: 7px;
+
+	/* 渐变色背景，居中，背景小一点露出行间距，不重复显示 */
+	background: linear-gradient(30deg,rgba(44, 216, 213, 0.7), rgba(197, 193, 255, 0.7), rgba(255, 186, 195, 0.7)) center;
+	background-size: auto auto;
+	background-repeat: no-repeat;
+	  /* 过渡动画时间 */
+	transition: all 0.4s;
+}
+.tit:hover {
+	/* 鼠标放上来，改变背景大小、位置 */
+	background-size: 100% 0%;
+	background-position-y: 90%;
+	/* 改变文字颜色，文字添加简单描边 */
+	color: #2c2c2c;
+	text-shadow: 0.05em 0.05em 0 #fcfcfc, -0.05em 0.05em 0 #fcfcfc,
+	0 0.05em 0 #fcfcfc;
 }
 
-#tit{
-	font-size:26px;/*元素的字体大小设置为26px*/
-}
+
+
 #tuichu{
 	float:right;/*元素向右浮动*/
 	font-size:16px;/*大小设置为16px*/

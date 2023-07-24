@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>学生管理界面</title>
-<link href="style/style.css" rel="stylesheet" type="text/css">
+<link href="style/student.css" rel="stylesheet" type="text/css">
 
 </head>
 

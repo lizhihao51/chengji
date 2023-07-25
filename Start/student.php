@@ -21,8 +21,8 @@
     </div>
 
     <div class="anniu">
-      <a href="student/jiagong.php" target="kuang">各科成绩</a>
-      <!--<a href="student/s_all_rank.php" target="kuang">各科成绩</a>-->
+      <!-- <a href="student/jiagong.php" target="kuang">各科成绩</a> -->
+      <a href="student/s_all_rank.php" target="kuang">各科成绩</a>
     </div>
 </div>
   

@@ -105,19 +105,19 @@ $queryString_cj_msg = sprintf("&totalRows_cj_msg=%d%s", $totalRows_cj_msg, $quer
   <?php do { ?>
     <div class="list1">
       <ul>
-        <li><?php echo $row_cj_msg['姓名']; ?></li>
-        <li><?php echo $row_cj_msg['考试名']; ?></li>
-        <li><?php echo $row_cj_msg['总分']; ?></li>
-        <li><?php echo $row_cj_msg['班排名']; ?></li>
-        <li><?php echo $row_cj_msg['语']; ?></li>
-        <li><?php echo $row_cj_msg['数']; ?></li>
-        <li><?php echo $row_cj_msg['外']; ?></li>
-        <li><?php echo $row_cj_msg['物']; ?></li>
-        <li><?php echo $row_cj_msg['化']; ?></li>
-        <li><?php echo $row_cj_msg['生']; ?></li>
-        <li><?php echo $row_cj_msg['政']; ?></li>
-        <li><?php echo $row_cj_msg['史']; ?></li>
-        <li><?php echo $row_cj_msg['地']; ?></li>
+      <li><?php echo empty($row_cj_msg['姓名']) ? '-' : $row_cj_msg['姓名']; ?></li>
+      <li><?php echo empty($row_cj_msg['考试名']) ? '-' : $row_cj_msg['考试名']; ?></li>
+      <li><?php echo empty($row_cj_msg['总分']) ? '-' : $row_cj_msg['总分']; ?></li>
+      <li><?php echo empty($row_cj_msg['班排名']) ? '-' : $row_cj_msg['班排名']; ?></li>
+      <li><?php echo empty($row_cj_msg['语']) ? '-' : $row_cj_msg['语']; ?></li>
+      <li><?php echo empty($row_cj_msg['数']) ? '-' : $row_cj_msg['数']; ?></li>
+      <li><?php echo empty($row_cj_msg['外']) ? '-' : $row_cj_msg['外']; ?></li>
+      <li><?php echo empty($row_cj_msg['物']) ? '-' : $row_cj_msg['物']; ?></li>
+      <li><?php echo empty($row_cj_msg['化']) ? '-' : $row_cj_msg['化']; ?></li>
+      <li><?php echo empty($row_cj_msg['生']) ? '-' : $row_cj_msg['生']; ?></li>
+      <li><?php echo empty($row_cj_msg['政']) ? '-' : $row_cj_msg['政']; ?></li>
+      <li><?php echo empty($row_cj_msg['史']) ? '-' : $row_cj_msg['史']; ?></li>
+      <li><?php echo empty($row_cj_msg['地']) ? '-' : $row_cj_msg['地']; ?></li>
       </ul>
     </div>
     <?php } while ($row_cj_msg = mysql_fetch_assoc($cj_msg)); ?>

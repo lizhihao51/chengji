@@ -11,6 +11,7 @@
 <div id="box">
 
   <div id="left">
+    <br>
     <div class="anniu">
       <a href="student/t_xs_detail.php" target="kuang">个人信息</a>
     </div>
@@ -27,7 +28,7 @@
   
   <div id="right">
     <div id="main-bg">
-      <iframe id="kuang" style="width: 100%; height: 93%;" src="student/t_xs_detail.php" scrolling="auto" name="kuang">
+      <iframe id="kuang" style="width: 100%; height: 94%;" src="student/t_xs_detail.php" scrolling="auto" name="kuang">
         </iframe>
     </div>
   </div>

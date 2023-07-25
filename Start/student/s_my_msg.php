@@ -42,7 +42,7 @@ if (isset($_GET['pageNum_cj_msg'])) {
 $startRow_cj_msg = $pageNum_cj_msg * $maxRows_cj_msg;
 $unam=$_COOKIE["admin"];
 mysql_select_db($database_login, $login);
-$query_cj_msg = "SELECT 姓名,考试名,总分,班排名 FROM cj join kc using(考试号)  WHERE 姓名='$unam'";
+$query_cj_msg = "SELECT 姓名,考试名,总分,班排名,语,数,外,物,化,生,政,史,地 FROM cj join kc using(考试号)  WHERE 姓名='$unam'";
 $query_limit_cj_msg = sprintf("%s LIMIT %d, %d", $query_cj_msg, $startRow_cj_msg, $maxRows_cj_msg);
 $cj_msg = mysql_query($query_limit_cj_msg, $login) or die(mysql_error());
 $row_cj_msg = mysql_fetch_assoc($cj_msg);
@@ -85,13 +85,23 @@ $queryString_cj_msg = sprintf("&totalRows_cj_msg=%d%s", $totalRows_cj_msg, $quer
 
   <div id="jishu">共有 <?php echo $totalRows_cj_msg ?> 条记录，目前显示第<?php echo ($startRow_cj_msg + 1) ?>条至第<?php echo min($startRow_cj_msg + $maxRows_cj_msg, $totalRows_cj_msg) ?>条</div>
   <div id="title1">
-        <ul>
-          <li>姓名</li>
-          <li>考试名</li>
-          <li>总分</li>
-          <li>班排名</li>
+    <ul>
+      <li>姓名</li>
+      <li>考试名</li>
+      <li>总分</li>
+      <li>班排名</li>
+      <li>语</li>
+      <li>数</li>
+      <li>外</li>
+      <li>物</li>
+      <li>化</li>
+      <li>生</li>
+      <li>政</li>
+      <li>史</li>
+      <li>地</li>
     </ul>
   </div>
+  
   <?php do { ?>
     <div class="list1">
       <ul>
@@ -99,6 +109,15 @@ $queryString_cj_msg = sprintf("&totalRows_cj_msg=%d%s", $totalRows_cj_msg, $quer
         <li><?php echo $row_cj_msg['考试名']; ?></li>
         <li><?php echo $row_cj_msg['总分']; ?></li>
         <li><?php echo $row_cj_msg['班排名']; ?></li>
+        <li><?php echo $row_cj_msg['语']; ?></li>
+        <li><?php echo $row_cj_msg['数']; ?></li>
+        <li><?php echo $row_cj_msg['外']; ?></li>
+        <li><?php echo $row_cj_msg['物']; ?></li>
+        <li><?php echo $row_cj_msg['化']; ?></li>
+        <li><?php echo $row_cj_msg['生']; ?></li>
+        <li><?php echo $row_cj_msg['政']; ?></li>
+        <li><?php echo $row_cj_msg['史']; ?></li>
+        <li><?php echo $row_cj_msg['地']; ?></li>
       </ul>
     </div>
     <?php } while ($row_cj_msg = mysql_fetch_assoc($cj_msg)); ?>

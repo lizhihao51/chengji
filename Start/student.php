@@ -22,13 +22,13 @@
 
     <div class="anniu">
       <!-- <a href="student/jiagong.php" target="kuang">各科成绩</a> -->
-      <a href="student/s_all_rank.php" target="kuang">各科成绩</a>
+      <a href="student/s_all_rank.php" target="kuang">成绩单</a>
     </div>
 </div>
   
   <div id="right">
     <div id="main-bg">
-      <iframe id="kuang" style="width: 100%; height: 94%;" src="student/t_xs_detail.php" scrolling="auto" name="kuang">
+      <iframe id="kuang" src="student/t_xs_detail.php" scrolling="auto" name="kuang">
         </iframe>
     </div>
   </div>

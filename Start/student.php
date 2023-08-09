@@ -12,15 +12,15 @@
 
   <div id="left">
     <br>
-    <div class="anniu">
+    <div class="xzk">
       <a href="student/t_xs_detail.php" target="kuang">个人信息</a>
     </div>
 
-    <div class="anniu">
+    <div class="xzk">
       <a href="student/s_my_msg.php" target="kuang">我的成绩</a>
     </div>
 
-    <div class="anniu">
+    <div class="xzk">
       <!-- <a href="student/jiagong.php" target="kuang">各科成绩</a> -->
       <a href="student/s_all_rank.php" target="kuang">成绩单</a>
     </div>

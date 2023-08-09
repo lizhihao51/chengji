@@ -20,25 +20,42 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
 </head>
 <body>
   <div id="box">
-    <div id="xxi">
+    <div class="xxi">
       <form action="s1_xs_mgr2.php" method="post" enctype="multipart/form-data">
         <table width="660">
           <tr>
             <td>学校：</td>
             <td>
-              <input type="text" id="xx" name="xx" placeholder="请输入学校" value="<?php echo $row_stu_msg['学校']; ?>" required/>
+              <input class="xgk" type="text" id="xx" name="xx" placeholder="请输入学校" value="<?php echo $row_stu_msg['学校']; ?>" required/>
             </td>
           </tr>
           <tr>
             <td>班级：</td>
             <td>
-              <input type="text" id="zym" name="zym" placeholder="请输入班级" value="<?php echo $row_stu_msg['班级']; ?>" required/>
+              <input class="xgk" type="text" id="zym" name="zym" placeholder="请输入班级" value="<?php echo $row_stu_msg['班级']; ?>" required/>
+            </td>
+          </tr>
+          <tr>
+            <td>班别：</td>
+            <td>
+            <select name="banb" id="banb">
+                <option value="物 化 生">物 化 生</option>
+                <option value="物 化 政">物 化 政</option>
+                <option value="物 化 地">物 化 地</option>
+                <option value="物 生 政">物 生 政</option>
+                <option value="物 生 地">物 生 地</option>
+                <option value="史 化 政">史 化 政</option>
+                <option value="史 化 地">史 化 地</option>
+                <option value="史 生 政">史 生 政</option>
+                <option value="史 生 地">史 生 地</option>
+                <option value="史 政 地">史 政 地</option>
+              </select>
             </td>
           </tr>
           <tr>
             <td >姓名：</td>
             <td>
-              <input type="text" id="xm" name="xm" placeholder="请输入姓名" value="<?php echo $row_stu_msg['姓名']; ?>" required/>
+              <input class="xgk" type="text" id="xm" name="xm" placeholder="请输入姓名" value="<?php echo $row_stu_msg['姓名']; ?>" required/>
             </td>
           </tr>
           <tr>
@@ -53,12 +70,12 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
           <tr>
             <td>备注：</td>
             <td>
-              <input type="text" id="note" name="note" placeholder="请输入备注" value="<?php echo $row_stu_msg['备注']; ?>"/>
+              <input class="xgk" type="text" id="note" name="note" placeholder="请输入备注" value="<?php echo $row_stu_msg['备注']; ?>"/>
             </td>
           </tr>
           <tr>
             <td></td>
-            <td><input type="submit" name="submit" value="确认修改"/></td>
+            <td><input type="submit" name="submit" class="submit" value="确认修改"/></td>
           </tr>
         </table>
       </form>
@@ -67,6 +84,7 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
     mysql_select_db($database_login, $login);
     $xm = $_POST['xm'];
     $sex = $_POST["sex"];
+    $banb = $_POST["banb"];
     $zym = $_POST["zym"];
     $note = $_POST["note"];
     $xx = $_POST["xx"];
@@ -74,7 +92,7 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
 
     // 修改学生信息
     if ((isset($_POST["submit"])) && ($_POST["submit"] == "确认修改")) {
-      $SQL = "UPDATE student SET 姓名='$xm', 性别='$sex', 班级='$zym', 备注='$note', 学校='$xx' WHERE 姓名='$unam'";
+      $SQL = "UPDATE student SET 姓名='$xm', 性别='$sex', 班级='$zym',班别='$banb',备注='$note', 学校='$xx' WHERE 姓名='$unam'";
       $result = mysql_query($SQL);
       if ($result) {
         echo"<script>alert(\"记录更新成功\");</script>";

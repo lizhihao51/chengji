@@ -57,16 +57,28 @@ iframe{
 	width:100%;
 	height:94%;
 }
-.anniu{
-	background-color:green;
-	cursor:pointer;
-	text-align:center;
-	width:150px;
-	height:50px;
-	margin-bottom:20px;
-	line-height:50px;
-	margin-left:auto;
-	margin-right:auto;
+.xzk{
+	background: radial-gradient(at 0% 0%,rgba(255, 183, 0, 1) 1%, rgba(255, 215, 115, 1) 100%); /* 背景颜色为径向渐变，从橙色到浅黄色 */
+	text-shadow: 2px 1px 2px rgba(102, 102, 102, 1); /* 文字阴影效果，颜色为浅灰色 */
+	border-radius: 0 30px 30px 30px; /* 边框圆角，顶部左右圆角为0，底部左右圆角为30px */
+	text-align:center; /* 文字居中对齐 */
+	width:150px; /* 宽度为150像素 */
+	height:50px; /* 高度为50像素 */
+	margin-bottom:20px; /* 底部外边距为20像素 */
+	line-height:50px; /* 行高为50像素 */
+	margin-left:auto; /* 左外边距自动 */
+	margin-right:auto; /* 右外边距自动 */
+	opacity: 0.85; /* 不透明度为0.85 */
+	color: #ffffff;
+}
+.xzk:hover {
+	/* 鼠标放上来，改变背景大小、位置 */
+	background: rgba(255, 183, 0, 0.8);
+	background-size: 100% 0%;
+	background-position-y: 90%;
+	/* 改变文字颜色，文字添加简单描边 */
+	text-shadow: 0.05em 0.05em 0 #535353, -0.05em 0.05em 0 #535353,
+	0 0.05em 0 #535353;
 }
 a{
 	text-decoration:none;

@@ -37,26 +37,26 @@ if(isset($_GET['kcm'])){
 	$currentPage = $_SERVER["PHP_SELF"];
 	
 
-$maxRows_cj_rank = 10;
+$maxRows_cj_rank = 20;
 $pageNum_cj_rank = 0;
 if (isset($_GET['pageNum_cj_rank'])) {
 	$pageNum_cj_rank = $_GET['pageNum_cj_rank'];
 }
 $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
-
 mysql_select_db($database_login, $login);
-$query_cj_rank = "select 姓名,考试号,考试名,总分,班排名,语,数,外,物,化,生,政,史,地 
+$query_cj_rank = "select 姓名,班级,考试号,考试名,总分,总班,语,数,外,物,化,生,政,史,地 
 from(
-select 姓名,考试号,考试名,总分,班排名,语,数,外,物,化,生,政,史,地 
+select 姓名,班级,考试号,考试名,总分,总班,语,数,外,物,化,生,政,史,地 
 from 
-(select 姓名,考试号,kc.考试名,cj.总分,班排名,语,数,外,物,化,生,政,史,地 
-from cj
-join kc
+(select 姓名,班级,考试号,kc.考试名,cj.总分,总班,语,数,外,物,化,生,政,史,地 
+from kc
+join cj
 using(考试号)
 where 考试名='$_kcm'
 order by 总分 desc) a
 join (select @currank := 0 ) q
 ) b";
+echo $banji;
 $query_limit_cj_rank = sprintf("%s LIMIT %d, %d", $query_cj_rank, $startRow_cj_rank, $maxRows_cj_rank);
 $cj_rank = mysql_query($query_limit_cj_rank, $login) or die(mysql_error());
 $row_cj_rank = mysql_fetch_assoc($cj_rank);
@@ -187,7 +187,6 @@ function xuanze(){
 	<div id="title3" class="title3">
 		<ul>
 			<li>姓名</li>
-			<li>考试名</li>
 			<li>总分</li>
 			<li>班排名</li>
 			<li>语</li>
@@ -224,15 +223,14 @@ function xuanze(){
 	}
 	}
 	/*$queryString_cj_rank = sprintf("&totalRows_cj_rank=%d%s", $totalRows_cj_rank, $queryString_cj_rank);*/
-		
+		echo "<link rel=\"stylesheet\" href=\".font/iconfont.css\">";
 		echo "<script>document.getElementById(\"sss\").style.display=\"none\";</script>"; 
 		do { 
 			echo "<div class=\"list1\">";
 			echo " <ul>";
 			echo " 	<li>";echo empty($row_cj_rank['姓名']) ? '-' : $row_cj_rank['姓名'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['考试名']) ? '-' : $row_cj_rank['考试名'];  echo "</li>";
 			echo " 	<li>";echo empty($row_cj_rank['总分']) ? '-' : $row_cj_rank['总分'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['班排名']) ? '-' : $row_cj_rank['班排名'];  echo "</li>";
+			echo " 	<li>";echo empty($row_cj_rank['总班']) ? '-' : $row_cj_rank['总班'];  echo "</li>";
 			echo " 	<li>";echo empty($row_cj_rank['语']) ? '-' : $row_cj_rank['语'];  echo "</li>";
 			echo " 	<li>";echo empty($row_cj_rank['数']) ? '-' : $row_cj_rank['数'];  echo "</li>";
 			echo " 	<li>";echo empty($row_cj_rank['外']) ? '-' : $row_cj_rank['外'];  echo "</li>";
@@ -249,29 +247,44 @@ function xuanze(){
 			echo "<div class=\"list2\" style=\"text-align:center;\">目前还没有添加任何信息</div>";
 		} 
 		echo "<div id=\"menu\">";
+		if ($pageNum_cj_rank > 0 or $pageNum_cj_rank < $totalPages_cj_rank ) {
+			echo "<div id=\"xzys\">";
+		}
 		if ($pageNum_cj_rank > 0) {
 			echo "<a href=\"";
 			printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'],  0, $queryString_cj_rank);
-			echo "\">第一页</a> ";
+			echo "\"><img src=\"imgs/1.png\" width=\"50px\" height=\"50px\"></a> ";
+		}
+		else {
+			echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
 		}
 		//----
 		if ($pageNum_cj_rank > 0) {
 			echo "<a href=\"";
 			printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'],  max(0, $pageNum_cj_rank - 1), $queryString_cj_rank); 
-			echo "\">上一页</a> ";
+			echo "\"><img src=\"imgs/2.png\" width=\"50px\" height=\"50px\"></a> ";
+		}
+		else {
+			echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
 		}
 		//----
 		if ($pageNum_cj_rank < $totalPages_cj_rank) {
 			echo "<a href=\"";
 			printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'], min($totalPages_cj_rank, $pageNum_cj_rank + 1), $queryString_cj_rank);
-			echo "\">下一页</a> ";
+			echo "\"><img src=\"imgs/3.png\" width=\"50px\" height=\"50px\"></a> ";
+		}
+		else {
+			echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
 		}
 		if ($pageNum_cj_rank < $totalPages_cj_rank) {
 			echo "<a href=\"";
 			printf("%s?kcm=%s&pageNum_cj_rank=%d%s",  $currentPage, $_GET['kcm'],$totalPages_cj_rank, $queryString_cj_rank); 
-			echo "\">最后一页</a> ";
+			echo "\"><img src=\"imgs/4.png\" width=\"50px\" height=\"50px\"></a> ";
 		}
-		echo "</div>";
+		else {
+			echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
+		}
+		echo "</div></div>";
 	}
 ?>
 </div>

@@ -2,17 +2,14 @@
 require_once('../../Connections/login.php');
 require_once('../../Connections/is_login.php');
 
-// 确保输入框显示原内容
 $unam = $_GET['unam'];
 mysql_select_db($database_login, $login);
 $query_stu_msg = "SELECT * FROM student WHERE 姓名='$unam'";
 $stu_msg = mysql_query($query_stu_msg, $login) or die(mysql_error());
 $row_stu_msg = mysql_fetch_assoc($stu_msg);
 
-// HTML部分
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title></title>
@@ -97,6 +94,7 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
       if ($result) {
         echo"<script>alert(\"记录更新成功\");</script>";
         header("Location:t_xs_detail.php");
+        
       } else {
         echo "记录更新失败: " . mysql_error();
       }

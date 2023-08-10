@@ -70,6 +70,7 @@ iframe{
 	margin-right:auto; /* 右外边距自动 */
 	opacity: 0.85; /* 不透明度为0.85 */
 	color: #ffffff;
+	letter-spacing: 4px;
 }
 .xzk:hover {
 	/* 鼠标放上来，改变背景大小、位置 */

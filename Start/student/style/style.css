@@ -6,6 +6,7 @@
 }
 body,html {
 	height: 100%;
+	min-width: 1100px;
 }
 body {
 	font-family: 微软雅黑;
@@ -15,17 +16,66 @@ body {
 	
 	background-repeat: repeat-x;
 }
+.header{
+	line-height: 40px;
+	width: 200px;
+	height: 100px;
+	font-size: 25px;
+	text-align: center;
+	letter-spacing: 7px;
+	text-shadow:0.05em 0.05em 0 #fffefe, -0.05em 0.05em 0 #7e7e7e,0 0.05em 0 #7e7e7e;
+
+}
 #box {
-	width: 1050px;
+	width: 1100px;
 	height: 90%;
 	overflow: hidden;
 	background-repeat: no-repeat;
 	padding:20px;
-	/*border:2px solid black;*/
+	display: inline;
 }
 #jishu{
 	text-align:right;
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
+.xxi {
+	position: absolute; /* 设置绝对定位 */
+	color: rgb(0, 0, 0);
+	padding: 30px;
+}
+.xxi td{
+	height: 40px;
+}
+.xgk{
+    width: 200px;
+    height: 30px;
+    text-indent: 10px;
+	font-size: 16px;    
+    border: 1.5px solid #f1e8e8; 
+	background-color: rgb(163, 181, 187,0.5);
+    outline: none;
+	border-radius: 5px 5px 5px 5px; 
+	text-shadow: 1px 1px 1px rgba(255, 255, 255); /* 添加2像素水平偏移、2像素垂直偏移和4像素模糊半径的黑色（透明度0.5）阴影效果 */
+}
+form select {
+	border-radius: 5px 5px 5px 5px; 
+    text-indent: 10px;
+    width: 202px;                 /* 宽度 */
+    height: 32px;                 /* 高度 */
+    background-color: rgba(163, 181, 187, 0.5);  /* 元素背景颜色，设置透明度为0.5 */
+    border: 1.5px solid #f1e8e8;    /* 边框线 */
+    text-shadow: 1px 1px 1px rgba(255, 255, 255);
+    outline: none;                 /* 去掉黑框 */
+    font-size: 16px;              /* 字体大小 */
+}
+
+form option {
+    width: 160px;
+    height: 30px;
+}
+
 /*-------------------------*/
 #title_r {
 	height: 40px;
@@ -43,9 +93,23 @@ body {
 	float: left;
 	font-size: 18px;
 }
+.submit{
+	margin-top: 20px;
+    width: 200px ;
+    height: 35px ;
+	color:#FFF;
+	font-size: 18px;
+    background-color: #24a5f1;
+	border: none;
+	letter-spacing: 4px;
+	border-radius: 10px 10px 10px 10px;
+}
+.submit:hover{
+    background: #0297ef;
+}
 .list_r {
 	height: auto;
-	width:1050px;
+	width:1100;
 	overflow: hidden;
 	border-bottom: dashed 1px #00293C;
 	line-height: 30px;
@@ -67,20 +131,25 @@ body {
 }
 #title1 {
 	height: 40px;
-	line-height: 40px;
-	color:rgb(0,0,0);
+	line-height: 40px; 
+	color: rgb(0, 0, 0);
 	font-weight: bold;
-	
-	border-bottom: solid 1px #116493;
-	margin-bottom: 10px;
 }
+
 #title1 li {
 	list-style-type: none;
-	width: 150px;
+	width: 90px;
 	text-align: center;
 	float: left;
 	font-size: 18px;
 }
+
+#spacer {
+	width: 1080px;
+	border-bottom: 2px solid #000;
+	margin-bottom: 10px;
+}
+
 #title2 {
 	height: 30px;
 	line-height: 30px;
@@ -96,22 +165,43 @@ body {
 	text-align: center;
 	float: left;
 }
+#title3 {
+	height: 40px;
+	width:1080px;
+	line-height: 38px;
+	color:rgb(0,0,0);
+	font-weight: bold;
+	border-bottom: solid 2px #116493;
+	margin-top: 25px;
+	margin-bottom: 10px;
+}
+#title3 li {
+	list-style-type: none;
+	width: 90px;
+	text-align: center;
+	float: left;
+	font-size: 18px;
+}
+
 .list1 {
 	height: auto;
-	width:1050px;
+	width:1080px;
 	overflow: hidden;
-	border-bottom: dashed 1px #00293C;
-	line-height: 30px;
+	border-bottom: dashed 2px #00293C;
+	line-height: 40px;
 	clear: both;
 	font-size: 18px;
 }
 .list1 li {
 	list-style-type: none;
-	width: 150px;
+	width: 90px;
 	text-align: center;
 	float: left;
 }
+
+
 .list2 {
+	width:1080px;
 	height: 30px;
 	border-bottom: dashed 1px #00293C;
 	line-height: 30px;
@@ -122,13 +212,43 @@ body {
 	text-align: center;
 	float: left;
 }
-#menu{
-	text-align:right;
+
+
+#xzys{
+	background: radial-gradient(at 0% 0%,rgba(255, 183, 0, 0.5) 1%, rgba(255, 215, 115, 0.5) 100%); /* 背景颜色为径向渐变，从橙色到浅黄色 */
+	text-shadow: 2px 1px 2px rgba(102, 102, 102, 1); /* 文字阴影效果，颜色为浅灰色 */
+	border-radius: 30px 30px 30px 30px; /* 边框圆角，顶部左右圆角为0，底部左右圆角为30px */
+	width:300px; /* 宽度为150像素 */
+	text-align:center; /* 文字居中对齐 */
+	height:50px; /* 高度为50像素 */
+	margin-top: 20px;
+	line-height:50px; /* 行高为50像素 */
+	margin-left:auto; /* 左外边距自动 */
+	margin-right:auto; /* 右外边距自动 */
+	opacity: 0.85; /* 不透明度为0.85 */
+	color: #ffffff;
 	
+}
+#xzys a{
+	width:70px;
 }
 #top1{
 	padding:20px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
 }
 a{
 	text-decoration:none;
+}
+#sel{
+	width: 150px;
+    height: 30px;
+    text-indent: 10px;
+	font-size: 18px;    
+    border: 1px solid #f1e8e8; 
+	background-color: rgb(163, 181, 187,0.5);
+    outline: none;
+	border-radius: 5px 5px 5px 5px; 
+	text-shadow: 1px 1px 1px rgba(255, 255, 255); 
 }

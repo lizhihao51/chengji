@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             
             <input type="password" id="confirm_password" name="confirm_password" placeholder="确认密码"><br>
 
-            <input type="text" id="banji" name="banji" placeholder="班级(格式1.2、1.5、2.8)"><br>
+            <input type="text" id="banji" name="banji" placeholder="班级(格式1.2班、1.5班、2.8班)"><br>
 
             <input type="text" id="unam" name="unam" placeholder="名字(请输入真实名称,错误则无法查询)">
             

@@ -43,20 +43,27 @@ if (isset($_GET['pageNum_cj_rank'])) {
 	$pageNum_cj_rank = $_GET['pageNum_cj_rank'];
 }
 $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
+
+$unam=$_COOKIE["admin"];
+mysql_select_db($database_login, $login);
+$query_st_msg = "SELECT * FROM student WHERE 姓名='$unam'";
+$st_msg = mysql_query($query_st_msg, $login) or die(mysql_error());
+$row_st_msg = mysql_fetch_assoc($st_msg);
+$banji=$row_st_msg['班级'];
+
 mysql_select_db($database_login, $login);
 $query_cj_rank = "select 姓名,班级,考试号,考试名,总分,总班,语,数,外,物,化,生,政,史,地 
 from(
 select 姓名,班级,考试号,考试名,总分,总班,语,数,外,物,化,生,政,史,地 
 from 
 (select 姓名,班级,考试号,kc.考试名,cj.总分,总班,语,数,外,物,化,生,政,史,地 
-from kc
-join cj
+from cj
+join kc
 using(考试号)
-where 考试名='$_kcm'
+where 考试名='$_kcm' and 班级='$banji'
 order by 总分 desc) a
 join (select @currank := 0 ) q
 ) b";
-echo $banji;
 $query_limit_cj_rank = sprintf("%s LIMIT %d, %d", $query_cj_rank, $startRow_cj_rank, $maxRows_cj_rank);
 $cj_rank = mysql_query($query_limit_cj_rank, $login) or die(mysql_error());
 $row_cj_rank = mysql_fetch_assoc($cj_rank);
@@ -105,7 +112,7 @@ function xuanze(){
     }
 </script>
 <div id="box">
-	<div id="search">
+	<div class="search">
 		<p id="top1">
 		考试名:
 		<select id="sel" onchange="xuanze()">
@@ -115,7 +122,7 @@ function xuanze(){
 		<?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
 		</select>
 		</p>
-			<form id="kc_search" name="kc_search" method="get" action="s_all_rank.php" hidden="">
+			<form id="kc_search" name="kc_search" method="get" action="s_bj_rank.php" hidden="">
 			<p>
 					<label for="password"></label>
 					搜索课程：<input type="text" name="in_kc" id="in_kc" placeholder="请输入考试号或考试名"/>
@@ -223,7 +230,7 @@ function xuanze(){
 	}
 	}
 	/*$queryString_cj_rank = sprintf("&totalRows_cj_rank=%d%s", $totalRows_cj_rank, $queryString_cj_rank);*/
-		echo "<link rel=\"stylesheet\" href=\".font/iconfont.css\">";
+		
 		echo "<script>document.getElementById(\"sss\").style.display=\"none\";</script>"; 
 		do { 
 			echo "<div class=\"list1\">";
@@ -243,50 +250,50 @@ function xuanze(){
 			echo " </ul>";
 			echo " </div>";
 			} while ($row_cj_rank = mysql_fetch_assoc($cj_rank)); 
-		if ($totalRows_cj_rank == 0) {
-			echo "<div class=\"list2\" style=\"text-align:center;\">目前还没有添加任何信息</div>";
-		} 
-		echo "<div id=\"menu\">";
-		if ($pageNum_cj_rank > 0 or $pageNum_cj_rank < $totalPages_cj_rank ) {
-			echo "<div id=\"xzys\">";
+			if ($totalRows_cj_rank == 0) {
+				echo "<div class=\"list2\" style=\"text-align:center;\">目前还没有添加任何信息</div>";
+			} 
+			echo "<div id=\"menu\">";
+			if ($pageNum_cj_rank > 0 or $pageNum_cj_rank < $totalPages_cj_rank ) {
+				echo "<div id=\"xzys\">";
+			}
+			if ($pageNum_cj_rank > 0) {
+				echo "<a href=\"";
+				printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'],  0, $queryString_cj_rank);
+				echo "\"><img src=\"imgs/1.png\" width=\"50px\" height=\"50px\"></a> ";
+			}
+			else {
+				echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
+			}
+			//----
+			if ($pageNum_cj_rank > 0) {
+				echo "<a href=\"";
+				printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'],  max(0, $pageNum_cj_rank - 1), $queryString_cj_rank); 
+				echo "\"><img src=\"imgs/2.png\" width=\"50px\" height=\"50px\"></a> ";
+			}
+			else {
+				echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
+			}
+			//----
+			if ($pageNum_cj_rank < $totalPages_cj_rank) {
+				echo "<a href=\"";
+				printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'], min($totalPages_cj_rank, $pageNum_cj_rank + 1), $queryString_cj_rank);
+				echo "\"><img src=\"imgs/3.png\" width=\"50px\" height=\"50px\"></a> ";
+			}
+			else {
+				echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
+			}
+			if ($pageNum_cj_rank < $totalPages_cj_rank) {
+				echo "<a href=\"";
+				printf("%s?kcm=%s&pageNum_cj_rank=%d%s",  $currentPage, $_GET['kcm'],$totalPages_cj_rank, $queryString_cj_rank); 
+				echo "\"><img src=\"imgs/4.png\" width=\"50px\" height=\"50px\"></a> ";
+			}
+			else {
+				echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
+			}
+			echo "</div></div>";
 		}
-		if ($pageNum_cj_rank > 0) {
-			echo "<a href=\"";
-			printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'],  0, $queryString_cj_rank);
-			echo "\"><img src=\"imgs/1.png\" width=\"50px\" height=\"50px\"></a> ";
-		}
-		else {
-			echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
-		}
-		//----
-		if ($pageNum_cj_rank > 0) {
-			echo "<a href=\"";
-			printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'],  max(0, $pageNum_cj_rank - 1), $queryString_cj_rank); 
-			echo "\"><img src=\"imgs/2.png\" width=\"50px\" height=\"50px\"></a> ";
-		}
-		else {
-			echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
-		}
-		//----
-		if ($pageNum_cj_rank < $totalPages_cj_rank) {
-			echo "<a href=\"";
-			printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'], min($totalPages_cj_rank, $pageNum_cj_rank + 1), $queryString_cj_rank);
-			echo "\"><img src=\"imgs/3.png\" width=\"50px\" height=\"50px\"></a> ";
-		}
-		else {
-			echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
-		}
-		if ($pageNum_cj_rank < $totalPages_cj_rank) {
-			echo "<a href=\"";
-			printf("%s?kcm=%s&pageNum_cj_rank=%d%s",  $currentPage, $_GET['kcm'],$totalPages_cj_rank, $queryString_cj_rank); 
-			echo "\"><img src=\"imgs/4.png\" width=\"50px\" height=\"50px\"></a> ";
-		}
-		else {
-			echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
-		}
-		echo "</div></div>";
-	}
-?>
+	?>
 </div>
 </body>
 </html>

@@ -18,12 +18,13 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>个人信息页</title>
 <link href="style/style.css" rel="stylesheet" type="text/css">
+<link href="style/ico.css" rel="stylesheet" type="text/css">
 
 </head>
 
 <body>
 <div id="box">
-<div id="xxi">
+<div class="xxi">
 <table width="660">
     <tr>
         <td>学校：</td>
@@ -32,6 +33,10 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
     <tr>
         <td>班级：</td>
         <td><?php echo $row_stu_msg['班级']; ?></td>
+        </tr>
+    <tr>
+        <td>班别：</td>
+        <td><?php echo $row_stu_msg['班别']; ?></td>
       </tr>
         <td width="105">姓名：</td>
         <td width="550"><?php echo $row_stu_msg['姓名']; ?></td>
@@ -46,11 +51,13 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
       </tr>
     
 </table>
-<button onclick="tiao()">修改信息</button>
+<button class="submit" onclick="tiao()">修改信息</button>
 <form action="t_xs_detail.php" method="post" hidden="">
     <input type="text" id="unam" name="unam" required />
 </form>
 </div>
+</div>
+
 
 </body>
 </html>

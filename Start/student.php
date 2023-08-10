@@ -1,4 +1,5 @@
 <!--学生侧边栏-->
+<?php $unam=$_COOKIE["admin"];?>
 <?php require_once('../Connections/is_login.php'); ?>
 <html >
 <head>
@@ -22,8 +23,17 @@
 
     <div class="xzk">
       <!-- <a href="student/jiagong.php" target="kuang">各科成绩</a> -->
-      <a href="student/s_all_rank.php" target="kuang">成绩单</a>
+      <a href="student/s_bj_rank.php" target="kuang">班成绩单</a>
     </div>
+
+    <div class="xzk">
+      <a href="student/s_all_rank.php" target="kuang">级成绩单</a>
+    </div>
+
+    <div class="xzk">
+      <a href="student/s_admin_rank.php?unam=<?php echo "$unam";?>" target="kuang">修改密码</a>
+    </div>
+
 </div>
   
   <div id="right">

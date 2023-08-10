@@ -42,7 +42,7 @@ if (isset($_GET['pageNum_cj_msg'])) {
 $startRow_cj_msg = $pageNum_cj_msg * $maxRows_cj_msg;
 $unam=$_COOKIE["admin"];
 mysql_select_db($database_login, $login);
-$query_cj_msg = "SELECT 姓名,考试名,总分,班排名,语,数,外,物,化,生,政,史,地 FROM cj join kc using(考试号)  WHERE 姓名='$unam'";
+$query_cj_msg = "SELECT 姓名,考试名,班级,总分,总班,总级,语,语班,语级,数,数班,数级,外,外班,外级,物,物班,物级,化,化班,化级,生,生班,生级,政,政班,政级,史,史班,史级,地,地班,地级 FROM cj join kc using(考试号)  WHERE 姓名='$unam'";
 $query_limit_cj_msg = sprintf("%s LIMIT %d, %d", $query_cj_msg, $startRow_cj_msg, $maxRows_cj_msg);
 $cj_msg = mysql_query($query_limit_cj_msg, $login) or die(mysql_error());
 $row_cj_msg = mysql_fetch_assoc($cj_msg);
@@ -89,7 +89,6 @@ $queryString_cj_msg = sprintf("&totalRows_cj_msg=%d%s", $totalRows_cj_msg, $quer
       <li>姓名</li>
       <li>考试名</li>
       <li>总分</li>
-      <li>班排名</li>
       <li>语</li>
       <li>数</li>
       <li>外</li>
@@ -99,7 +98,9 @@ $queryString_cj_msg = sprintf("&totalRows_cj_msg=%d%s", $totalRows_cj_msg, $quer
       <li>政</li>
       <li>史</li>
       <li>地</li>
+      <br>
     </ul>
+    <div id="spacer"></div>
   </div>
   
   <?php do { ?>
@@ -108,7 +109,6 @@ $queryString_cj_msg = sprintf("&totalRows_cj_msg=%d%s", $totalRows_cj_msg, $quer
       <li><?php echo empty($row_cj_msg['姓名']) ? '-' : $row_cj_msg['姓名']; ?></li>
       <li><?php echo empty($row_cj_msg['考试名']) ? '-' : $row_cj_msg['考试名']; ?></li>
       <li><?php echo empty($row_cj_msg['总分']) ? '-' : $row_cj_msg['总分']; ?></li>
-      <li><?php echo empty($row_cj_msg['班排名']) ? '-' : $row_cj_msg['班排名']; ?></li>
       <li><?php echo empty($row_cj_msg['语']) ? '-' : $row_cj_msg['语']; ?></li>
       <li><?php echo empty($row_cj_msg['数']) ? '-' : $row_cj_msg['数']; ?></li>
       <li><?php echo empty($row_cj_msg['外']) ? '-' : $row_cj_msg['外']; ?></li>
@@ -118,6 +118,19 @@ $queryString_cj_msg = sprintf("&totalRows_cj_msg=%d%s", $totalRows_cj_msg, $quer
       <li><?php echo empty($row_cj_msg['政']) ? '-' : $row_cj_msg['政']; ?></li>
       <li><?php echo empty($row_cj_msg['史']) ? '-' : $row_cj_msg['史']; ?></li>
       <li><?php echo empty($row_cj_msg['地']) ? '-' : $row_cj_msg['地']; ?></li>
+      <li>‎</li>
+      <li>‎</li>
+      <li><?php echo empty($row_cj_msg['总班']) ? '-' : $row_cj_msg['总班']; ?>/<?php echo empty($row_cj_msg['总级']) ? '-' : $row_cj_msg['总级']; ?></li>
+      <li><?php echo empty($row_cj_msg['语班']) ? '-' : $row_cj_msg['语班']; ?>/<?php echo empty($row_cj_msg['语级']) ? '-' : $row_cj_msg['语级']; ?></li>
+      <li><?php echo empty($row_cj_msg['数班']) ? '-' : $row_cj_msg['数班']; ?>/<?php echo empty($row_cj_msg['数级']) ? '-' : $row_cj_msg['数级']; ?></li>
+      <li><?php echo empty($row_cj_msg['外班']) ? '-' : $row_cj_msg['外班']; ?>/<?php echo empty($row_cj_msg['外级']) ? '-' : $row_cj_msg['外级']; ?></li>
+      <li><?php echo empty($row_cj_msg['物班']) ? '-' : $row_cj_msg['物班']; ?>/<?php echo empty($row_cj_msg['物级']) ? '-' : $row_cj_msg['物级']; ?></li>
+      <li><?php echo empty($row_cj_msg['化班']) ? '-' : $row_cj_msg['化班']; ?>/<?php echo empty($row_cj_msg['化级']) ? '-' : $row_cj_msg['化级']; ?></li>
+      <li><?php echo empty($row_cj_msg['生班']) ? '-' : $row_cj_msg['生班']; ?>/<?php echo empty($row_cj_msg['生级']) ? '-' : $row_cj_msg['生级']; ?></li>
+      <li><?php echo empty($row_cj_msg['政班']) ? '-' : $row_cj_msg['政班']; ?>/<?php echo empty($row_cj_msg['政级']) ? '-' : $row_cj_msg['政级']; ?></li>
+      <li><?php echo empty($row_cj_msg['史班']) ? '-' : $row_cj_msg['史班']; ?>/<?php echo empty($row_cj_msg['史级']) ? '-' : $row_cj_msg['史级']; ?></li>
+      <li><?php echo empty($row_cj_msg['地班']) ? '-' : $row_cj_msg['地班']; ?>/<?php echo empty($row_cj_msg['地级']) ? '-' : $row_cj_msg['地级']; ?></li>
+
       </ul>
     </div>
     <?php } while ($row_cj_msg = mysql_fetch_assoc($cj_msg)); ?>

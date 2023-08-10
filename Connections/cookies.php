@@ -43,7 +43,8 @@ else
 			//点了退出
 		
 				setcookie('admin', $row1['username'], time()-3600,'/');
-				echo "<script>alert(\"已经退出\");</script>";
+				header ('Location: index.php');
+				echo "<script>alert(\"您已退出\");</script>";
 		}		
 }
 ?>

@@ -4,7 +4,7 @@ if(isset($_COOKIE['admin'])){
 }
 ?>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>成绩管理系统</title>
@@ -13,7 +13,11 @@ if(isset($_COOKIE['admin'])){
 
 <body>
     <div class="header" id="head"><br/>学生成绩查询系统</div>
-
+    <div id="gonggao">
+        <br/>公告：</br>
+        9月1号本系统已清除之前所有数据，请重新注册(或修改班级)，填写对应班级</br>
+        <br>！！！--注意班级格式为 1.3班 2.3班 填写时一定注意加上“班”--！！！
+    </div>
     <div class="container">
         <form id="user" name="user" method="POST" action="Connections/cookies.php">
             
@@ -53,7 +57,7 @@ if(isset($_COOKIE['admin'])){
 <br>
 Copyright © 2023 F8 Lisir™，All Rights Reserved.
 <br>
-联系邮箱：F8-lisir@foxmail.com
+联系邮箱：F8lisir@foxmail.com
 </div>
 
 </body>

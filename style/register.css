@@ -44,7 +44,7 @@ body{
     font-size: 26px;
     margin: 45px auto 30px auto;
 }
-.container input{
+.container .hx{
     width: 280px;
     height: 30px;
     text-indent: 8px;
@@ -53,7 +53,30 @@ body{
     outline: none;
     margin: 12px auto;
 }
-.container button{
+.container .bj1{
+    width: 280px;
+    height: 40px;
+    text-indent: 8px;
+    border: none;
+    color: rgb(149, 149, 149);
+    border-bottom: 1px solid #ddd;
+    outline: none;
+    margin-bottom: 10px;
+    margin: 0px auto 12px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+form select {
+	border-radius: 5px 5px 5px 5px; 
+    text-indent: 3px;
+    width: 75px;     
+    height: 25px;
+    background-color: rgba(163, 181, 187, 0.5);  /* 元素背景颜色，设置透明度为0.5 */
+    border: 1.5px solid #f1e8e8;    /* 边框线 */
+    outline: none;                 /* 去掉黑框 */           /* 字体大小 */
+}
+.container .submit{
     width: 280px;
     height: 40px;
     margin: 25px auto 40px auto;
@@ -67,25 +90,7 @@ body{
     /* 动画过渡 */
     transition: 0.5s;
 }
-.container button:hover{
-    background: linear-gradient(-200deg,#aac2ee,#fac0e7);
-    background-position-x: -280px;
-}
-.container submit{
-    width: 280px;
-    height: 40px;
-    margin: 35px auto 40px auto;
-    border: none;
-    background: linear-gradient(-200deg,#fac0e7,#aac2ee);
-    color: #fff;
-    font-weight: bold;
-    letter-spacing: 8px;
-    border-radius: 10px;
-    cursor: pointer;
-    /* 动画过渡 */
-    transition: 0.5s;
-}
-.container submit:hover{
+.container .submit:hover{
     background: linear-gradient(-200deg,#aac2ee,#fac0e7);
     background-position-x: -280px;
 }

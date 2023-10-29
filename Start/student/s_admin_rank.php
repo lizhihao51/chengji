@@ -26,9 +26,8 @@ require_once('../../Connections/is_login.php');
       $SQL = "UPDATE user SET password='$paw' WHERE unam='$unam'";
       $result = mysql_query($SQL);
       if ($result) {
-        echo"<script>alert(\"记录更新成功,请手动刷新重新登录\");</script>";
         setcookie('admin',$unam , time()-3600,'/');
-        header("Refresh: 1"); 
+        echo"<script>alert(\"密码修改成功，请手动刷新\");history.go(-1);</script>";
       } else {
         echo "记录更新失败: " . mysql_error();
       }

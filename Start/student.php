@@ -1,7 +1,7 @@
 <!--学生侧边栏-->
 <?php $unam=$_COOKIE["admin"];?>
 <?php require_once('../Connections/is_login.php'); ?>
-<html >
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>学生管理界面</title>

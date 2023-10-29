@@ -15,8 +15,8 @@ if(!isset($_COOKIE['admin'])){
 		$row = mysql_fetch_assoc($result);
 		$cookie=$row["unam"];
 		if ($uname == "" or $password == ""){
-    echo '<script>alert("账号或密码不能留空");history.go(-1);</script>';
-	}
+			echo '<script>alert("账号或密码不能留空");history.go(-1);</script>';
+			}
 	else if ($row) {
 			setcookie("admin",$cookie,time()+3600,'/');
 			echo"<script>url=\"../index.php\";window.location.href=url;</script>";

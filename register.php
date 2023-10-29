@@ -1,13 +1,15 @@
 <?php
 require_once('Connections/login.php');
-
+header("Content-Type:text/html;charset=utf-8");
 // 检查表单是否提交
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
     $username = $_POST['username'];
     $unam = $_POST['unam'];
-    $banji = $_POST['banji'];
+    $bj=$_POST['baj'];
+    $nj=$_POST['nij'];
+    $banji = $nj . '.' . $bj;
     
     // 进行数据验证
     if ($password !== $confirmPassword) {
@@ -22,33 +24,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     mysql_select_db($database_login, $login); // 连接数据库
     
     // 检查用户名是否已存在
-    $checkQuery1 = "SELECT * FROM user WHERE username='$username'";
-    $checkQuery2 = "SELECT * FROM user WHERE unam='$unam'";
-    $Result1 = mysql_query($checkQuery1, $login) or die(mysql_error());
-    $Result2 = mysql_query($checkQuery2, $login) or die(mysql_error());
-    if (mysql_num_rows($Result1) > 0) {
+    $checkUN = "SELECT * FROM user WHERE username='$username'";
+    $checkunam = "SELECT * FROM user WHERE unam='$unam'";
+    $ResultA1 = mysql_query($checkUN, $login) or die(mysql_error());
+    $ResultA2 = mysql_query($checkunam, $login) or die(mysql_error());
+    if (mysql_num_rows($ResultA1) > 0) {
         echo '<script>alert("已有人使用该账户名，请更换一个号码");history.go(-1);</script>';
+        $jy = 1;
         exit;
     }
-    else if(mysql_num_rows($Result2) > 0) {
+    else if(mysql_num_rows($ResultA2) > 0) {
         echo '<script>alert("名字已被占用请联系F8");history.go(-1);</script>';
+        $jy = 1;
         exit;
     }
-    else{
-        $insertQuery = "INSERT INTO user (username, password, unam, banji) VALUES ('$username','$password','$unam','$banji');"; 
-        $Result = mysql_query($insertQuery, $login) or die(mysql_error());
-        if ($Result) {
-            $InsertQuery = "INSERT INTO student (姓名,班级) VALUES ('$unam','$banji') ;";
-            $Result0 = mysql_query($InsertQuery, $login) or die(mysql_error());
-            if ($Result0) {
+    else if($jy != 1) {
+        $insertQuery0 = "INSERT INTO user (username, password, unam, banji) VALUES ('$username','$password','$unam','$banji');"; 
+        $Result2 = mysql_query($insertQuery0, $login) or die(mysql_error());
+        if ($Result2) {
+            $InsertQuery1 = "INSERT INTO student (姓名,班级) VALUES ('$unam','$banji') ;";
+            $Result3 = mysql_query($InsertQuery1, $login);
+            if ($result3) {
                 echo '<script>alert("用户注册成功");history.go(-1);</script>';
-                header("Location: login.php");
                 exit;
-            }   else {
-            echo '<script>alert("注册失败' . mysql_error() . '");history.go(-1);</script>';
-                }
+            }else{
+                echo '<script>alert("用户注册成功' . mysql_error() . '");history.go(-1);</script>';
             }
-        }      
+        } else {
+            echo '<script>alert("注册失败' . mysql_error() . '");history.go(-1);</script>';
+        }
+    }      
 }
 ?>
 <!DOCTYPE html>
@@ -57,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>注册页面</title>
     <link href="style/register.css" rel="stylesheet" type="text/css">
+    <script src="Connections/class.js"></script>
 </head>
 
 <body>
@@ -66,17 +72,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
             <div class="tit2">注册</div>
 
-            <input type="text" id="username" name="username"  placeholder="账号(请使用QQ号)"><br>
+            <input type="text" id="username" name="username"  class="hx" placeholder="账号(请使用QQ号)"><br>
             
-            <input type="password" id="password" name="password" placeholder="密码"><br>
+            <input type="password" id="password" name="password" class="hx" placeholder="密码"><br>
             
-            <input type="password" id="confirm_password" name="confirm_password" placeholder="确认密码"><br>
-
-            <input type="text" id="banji" name="banji" placeholder="班级(格式1.2班、1.5班、2.8班)"><br>
-
-            <input type="text" id="unam" name="unam" placeholder="名字(请输入真实名称,错误则无法查询)">
+            <input type="password" id="confirm_password" name="confirm_password" class="hx" placeholder="确认密码"><br>
+            <div class="bj1">年级：
+                    <select onchange="test1()" id="nj" name="nij">
+                        <option value="0">请选择</option>
+                        <option value="1">高一</option>
+                        <option value="2">高二</option>
+                        <option value="3">高三</option>
+                    </select>班级：<select id="bj" name="baj"></select>
+            </div>
             
-            <button>注册</button>
+            <input type="text" id="unam" name="unam" class="hx" placeholder="名字(请输入真实名称,错误则无法查询)">
+            
+            <input type="submit" name="submit" class="submit" id="submit"value="注册"/>
             
         </form>
     </div>

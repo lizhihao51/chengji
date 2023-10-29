@@ -118,8 +118,8 @@ $queryString_cj_msg = sprintf("&totalRows_cj_msg=%d%s", $totalRows_cj_msg, $quer
       <li><?php echo empty($row_cj_msg['政']) ? '-' : $row_cj_msg['政']; ?></li>
       <li><?php echo empty($row_cj_msg['史']) ? '-' : $row_cj_msg['史']; ?></li>
       <li><?php echo empty($row_cj_msg['地']) ? '-' : $row_cj_msg['地']; ?></li>
-      <li>‎</li>
-      <li>‎</li>
+      <li>排  名</li>
+      <li>班/级</li>
       <li><?php echo empty($row_cj_msg['总班']) ? '-' : $row_cj_msg['总班']; ?>/<?php echo empty($row_cj_msg['总级']) ? '-' : $row_cj_msg['总级']; ?></li>
       <li><?php echo empty($row_cj_msg['语班']) ? '-' : $row_cj_msg['语班']; ?>/<?php echo empty($row_cj_msg['语级']) ? '-' : $row_cj_msg['语级']; ?></li>
       <li><?php echo empty($row_cj_msg['数班']) ? '-' : $row_cj_msg['数班']; ?>/<?php echo empty($row_cj_msg['数级']) ? '-' : $row_cj_msg['数级']; ?></li>

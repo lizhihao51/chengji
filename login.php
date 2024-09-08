@@ -15,19 +15,20 @@ if(isset($_COOKIE['admin'])){
     <div class="header" id="head"><br/>学生成绩查询系统</div>
     <div id="gonggao">
         <br/>公告：</br>
-        9月1号本系统已清除之前所有数据，请重新注册(或修改班级)，填写对应班级</br>
-        <br>！！！--注意班级格式为 1.3班 2.3班 填写时一定注意加上“班”--！！！
+        本系统已清除所有数据，是之前的重构版，食用中可能会有bug，之前注册的账号需要重新注册，有问题者联系周至二中万能墙</br>
+        <br>
     </div>
     <div class="container">
         <form id="user" name="user" method="POST" action="Connections/cookies.php">
             
-            <div class="tit">登录</div>
+            <div class="tit" >登录</div >
 
         <input type="text" name="username" id="username" placeholder="账号">
         
         <input type="password" name="password" id="password" placeholder="密码">
 
-        <button>登录</button>
+        <button >登录</button>
+        <!-- <disabled> -->
 
         <span><br>没有账号？<a href="register.php">去注册</a></br></span>
     </form>

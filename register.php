@@ -7,9 +7,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $confirmPassword = $_POST['confirm_password'];
     $username = $_POST['username'];
     $unam = $_POST['unam'];
-    $bj=$_POST['baj'];
-    $nj=$_POST['nij'];
-    $banji = $nj . '.' . $bj;
+    $cls=$_POST['baj'];
+    $grade=$_POST['nij'];
+    $Class = $grade . '.' . $cls;
+
+    switch ($grade) {  // 开始 switch 语句，检查 $a 的值
+        case 1:    // 如果 $a 等于 1：
+            $level = 2025;  // 给变量 $b 赋值 2025
+            break;      // 退出 switch 语句，避免继续执行其他的 case
+        case 2:    // 如果 $a 等于 2：
+            $level = 2024;  // 给变量 $b 赋值 2024
+            break;      // 退出 switch 语句
+        case 3:
+            $level = 2023;
+            break;
+    }    
     
     // 进行数据验证
     if ($password !== $confirmPassword) {
@@ -39,10 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         exit;
     }
     else if($jy != 1) {
-        $insertQuery0 = "INSERT INTO user (username, password, unam, banji) VALUES ('$username','$password','$unam','$banji');"; 
+        $insertQuery0 = "INSERT INTO user (username, password, unam, banji, level ) VALUES ('$username','$password','$unam','$Class','$level');"; 
         $Result2 = mysql_query($insertQuery0, $login) or die(mysql_error());
         if ($Result2) {
-            $InsertQuery1 = "INSERT INTO student (姓名,班级) VALUES ('$unam','$banji') ;";
+            $InsertQuery1 = "INSERT INTO student (姓名,班级,level) VALUES ('$unam','$Class','$level') ;";
             $Result3 = mysql_query($InsertQuery1, $login);
             if ($result3) {
                 echo '<script>alert("用户注册成功");history.go(-1);</script>';

@@ -23,14 +23,13 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
     <div class="xxi">
       <form action="s1_xs_mgr2.php" method="post" enctype="multipart/form-data">
         <table width="660">
-          <tr>
-            <td>学校：</td>
-            <td>
-              <input class="xgk" type="text" id="xx" name="xx" placeholder="请输入学校" value="<?php echo $row_stu_msg['学校']; ?>" required/>
-            </td>
+          <tr><td>学校：</td>
+            <td><input class="xgk" type="text" id="xx" name="xx" placeholder="请输入学校" value="<?php echo $row_stu_msg['学校']; ?>" required/></td>
           </tr>
-          <tr>
-            <td>班级：</td>
+          <tr><td>届别：</td>
+            <td><input class="xgk" placeholder="<?php echo $row_stu_msg['level']; ?> 届" disabled/></td>
+          </tr>
+          <tr><td>班级：</td>
             <td>
               <input class="xgk" type="text" id="zym" name="zym" placeholder="请输入班级" value="<?php echo $row_stu_msg['班级']; ?>" required/>
             </td>
@@ -50,8 +49,8 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
             </td>
           </tr>
           <tr>
-            <td >姓名：</td>
-            <td>
+            <td width="100">姓名：</td>
+            <td width="460">
               <input class="xgk" placeholder="<?php echo $row_stu_msg['姓名']; ?>"disabled/>
             </td>
           </tr>

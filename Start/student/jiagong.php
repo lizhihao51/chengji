@@ -5,9 +5,8 @@
     <title>页面正在施工中</title>
     <link href="../../style/register.css" rel="stylesheet" type="text/css">
 </head>
-<span style="font-size: 45px;">页面正在施工中ing</span>
 <body>
-
+    <div class="tita">页面正在施工中</div>
         <div class="square">
             <ul>
                 <li></li>
@@ -26,6 +25,5 @@
                 <li></li>
             </ul>
         </div>
-    </div>
 </body>
 </html>

@@ -44,6 +44,7 @@ body{
     font-size: 26px;
     margin: 45px auto 30px auto;
 }
+
 .container .hx{
     width: 280px;
     height: 30px;
@@ -72,7 +73,7 @@ form select {
     text-indent: 3px;
     width: 75px;     
     height: 25px;
-    background-color: rgba(163, 181, 187, 0.5);  /* 元素背景颜色，设置透明度为0.5 */
+    background-color: rgba(180, 180, 180, 0.1);  /* 元素背景颜色，设置透明度为0.5 */
     border: 1.5px solid #f1e8e8;    /* 边框线 */
     outline: none;                 /* 去掉黑框 */           /* 字体大小 */
 }
@@ -219,4 +220,17 @@ ul li{
 	text-align:center;
 	padding-top:30px;
 	color:white;
+}
+.tita {
+    font-size: 45px;
+    color: #ff4d4d; /* 红色警告色 */
+    font-family: 'Arial', sans-serif; /* 更现代的字体 */
+    text-align: center; /* 居中对齐 */
+    padding: 20px;
+    background-color: #ffe5e5; /* 轻微的红色背景 */
+    border: 2px solid #ff4d4d; /* 红色边框 */
+    border-radius: 10px; /* 圆角边框 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    display: inline-block; /* 使背景颜色适应文字大小 */
+    margin: 20px auto; /* 上下外边距和水平居中 */
 }

@@ -1,6 +1,7 @@
 <?php require_once('../../Connections/login.php'); ?>
 <?php require_once('../../Connections/is_login.php'); ?>
 <?php
+$level=$_COOKIE["level"];
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -42,7 +43,7 @@ if (isset($_GET['pageNum_cj_msg'])) {
 $startRow_cj_msg = $pageNum_cj_msg * $maxRows_cj_msg;
 $unam=$_COOKIE["admin"];
 mysql_select_db($database_login, $login);
-$query_cj_msg = "SELECT 姓名,考试名,班级,总分,总班,总级,语,语班,语级,数,数班,数级,外,外班,外级,物,物班,物级,化,化班,化级,生,生班,生级,政,政班,政级,史,史班,史级,地,地班,地级 FROM cj join kc using(考试号)  WHERE 姓名='$unam'";
+$query_cj_msg = "SELECT * FROM cj join kc using(考试号)  WHERE 姓名='$unam'";
 $query_limit_cj_msg = sprintf("%s LIMIT %d, %d", $query_cj_msg, $startRow_cj_msg, $maxRows_cj_msg);
 $cj_msg = mysql_query($query_limit_cj_msg, $login) or die(mysql_error());
 $row_cj_msg = mysql_fetch_assoc($cj_msg);
@@ -108,7 +109,7 @@ $queryString_cj_msg = sprintf("&totalRows_cj_msg=%d%s", $totalRows_cj_msg, $quer
       <ul>
       <li><?php echo empty($row_cj_msg['姓名']) ? '-' : $row_cj_msg['姓名']; ?></li>
       <li><?php echo empty($row_cj_msg['考试名']) ? '-' : $row_cj_msg['考试名']; ?></li>
-      <li><?php echo empty($row_cj_msg['总分']) ? '-' : $row_cj_msg['总分']; ?></li>
+      <li><?php echo empty($row_cj_msg['总成绩']) ? '-' : $row_cj_msg['总成绩']; ?></li>
       <li><?php echo empty($row_cj_msg['语']) ? '-' : $row_cj_msg['语']; ?></li>
       <li><?php echo empty($row_cj_msg['数']) ? '-' : $row_cj_msg['数']; ?></li>
       <li><?php echo empty($row_cj_msg['外']) ? '-' : $row_cj_msg['外']; ?></li>

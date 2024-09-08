@@ -31,6 +31,10 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
         <td><?php echo $row_stu_msg['学校']; ?></td>
       </tr>
     <tr>
+        <td>届别：</td>
+        <td><?php echo $row_stu_msg['level']; ?> 届</td>
+        </tr>
+    <tr>
         <td>班级：</td>
         <td><?php echo $row_stu_msg['班级']; ?></td>
         </tr>
@@ -38,8 +42,8 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
         <td>班别：</td>
         <td><?php echo $row_stu_msg['班别']; ?></td>
       </tr>
-        <td width="105">姓名：</td>
-        <td width="550"><?php echo $row_stu_msg['姓名']; ?></td>
+        <td width="100">姓名：</td>
+        <td width="460"><?php echo $row_stu_msg['姓名']; ?></td>
       </tr>
     <tr>
         <td>性别：</td>

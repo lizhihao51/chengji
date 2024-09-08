@@ -1,6 +1,7 @@
 <?php require_once('../../Connections/login.php'); ?>
 <?php require_once('../../Connections/is_login.php'); ?>
 <?php
+$level=$_COOKIE["level"]; //处理届数区别
 //GET接受课程数据
 if(isset($_GET['kcm'])){
 	$_kcm=$_GET['kcm'];
@@ -44,16 +45,16 @@ if (isset($_GET['pageNum_cj_rank'])) {
 }
 $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
 mysql_select_db($database_login, $login);
-$query_cj_rank = "select 姓名,班级,考试号,考试名,总分,总班,语,数,外,物,化,生,政,史,地 
+$query_cj_rank = "select 姓名,班级,考试号,考试名,总成绩,总班,语,数,外,物,化,生,政,史,地 
 from(
-select 姓名,班级,考试号,考试名,总分,总班,语,数,外,物,化,生,政,史,地 
+select 姓名,班级,考试号,考试名,总成绩,总班,语,数,外,物,化,生,政,史,地 
 from 
-(select 姓名,班级,考试号,kc.考试名,cj.总分,总班,语,数,外,物,化,生,政,史,地 
+(select 姓名,班级,考试号,kc.考试名,cj.总成绩,总班,语,数,外,物,化,生,政,史,地 
 from kc
 join cj
 using(考试号)
 where 考试名='$_kcm'
-order by 总分 desc) a
+order by 总成绩 desc) a
 join (select @currank := 0 ) q
 ) b";
 echo $banji;
@@ -81,7 +82,7 @@ $totalPages_cj_rank = ceil($totalRows_cj_rank/$maxRows_cj_rank)-1;
 //下拉框
 $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
 mysql_select_db($database_login, $login);
-$query_Recordset1 = "SELECT * FROM kc";
+$query_Recordset1 = "SELECT * FROM kc WHERE 届别 LIKE $level ";
 $Recordset1 = mysql_query($query_Recordset1, $login) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 
@@ -229,7 +230,7 @@ function xuanze(){
 			echo "<div class=\"list1\">";
 			echo " <ul>";
 			echo " 	<li>";echo empty($row_cj_rank['姓名']) ? '-' : $row_cj_rank['姓名'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['总分']) ? '-' : $row_cj_rank['总分'];  echo "</li>";
+			echo " 	<li>";echo empty($row_cj_rank['总成绩']) ? '-' : $row_cj_rank['总成绩'];  echo "</li>";
 			echo " 	<li>";echo empty($row_cj_rank['总班']) ? '-' : $row_cj_rank['总班'];  echo "</li>";
 			echo " 	<li>";echo empty($row_cj_rank['语']) ? '-' : $row_cj_rank['语'];  echo "</li>";
 			echo " 	<li>";echo empty($row_cj_rank['数']) ? '-' : $row_cj_rank['数'];  echo "</li>";

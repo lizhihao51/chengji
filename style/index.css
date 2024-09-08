@@ -49,11 +49,28 @@ body,html {
 
 
 
-#tuichu{
-	float:right;/*元素向右浮动*/
-	font-size:16px;/*大小设置为16px*/
+#tuichu {
+    margin: 4px;
+    float: right;
+    font-size: 20px;
+    border: 1px solid #f8a5b3; /* 甜美的粉色边框 */
+    padding: 10px; /* 内边距 */
+    background-color: #fce4ec; /* 浅粉色背景色 */
+    border-radius: 8px; /* 圆角边框 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    color: #d81b60; /* 深粉色文本 */
+    font-weight: bold; /* 加粗字体 */
+    text-align: center; /* 文本居中 */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* 添加平滑过渡效果 */
 }
+
+#tuichu:hover {
+    background-color: #f8bbd0; /* 悬停时稍深的粉色背景色 */
+    border-color: #f48fb1; /* 悬停时粉色边框颜色 */
+}
+
+
 a{
 	text-decoration:none;/*将所有链接元素的文本装饰设为无*/
-	color:white;/*文本颜色设为白色*/
+	color:rgba(245, 126, 29, 0.726);/*文本颜色设为白色*/
 }

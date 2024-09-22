@@ -49,10 +49,10 @@ $fun=$_COOKIE["fun"];
         echo '<div class="xzk">
                 <a href="student/s_all_rank.php" target="kuang">级成绩单</a>
               </div>';
-    } elseif ($fun === '100') {
+    } elseif ($fun === '010') {
         // 显示 b 界面
         echo '<div class="xzk">
-                <a href="student/403.php" target="kuang">级成绩单</a>
+                <a href="student/s_all_rank.php" target="kuang">级成绩单</a>
               </div>';
     } else {
         // 默认显示内容

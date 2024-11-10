@@ -43,7 +43,7 @@ if (isset($_GET['pageNum_cj_msg'])) {
 $startRow_cj_msg = $pageNum_cj_msg * $maxRows_cj_msg;
 $unam=$_COOKIE["admin"];
 mysql_select_db($database_login, $login);
-$query_cj_msg = "SELECT * FROM cj join kc using(考试号)  WHERE 姓名='$unam'";
+$query_cj_msg = "SELECT * FROM cj join kc using(考试号)  WHERE 姓名='$unam' AND 届别='$level'";
 $query_limit_cj_msg = sprintf("%s LIMIT %d, %d", $query_cj_msg, $startRow_cj_msg, $maxRows_cj_msg);
 $cj_msg = mysql_query($query_limit_cj_msg, $login) or die(mysql_error());
 $row_cj_msg = mysql_fetch_assoc($cj_msg);

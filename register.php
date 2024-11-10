@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>注册页面</title>
     <link href="style/register.css" rel="stylesheet" type="text/css">
-    <script src="Connections/class.js"></script>
+    <script src="Connections/class.js" defer></script>
 </head>
 
 <body>

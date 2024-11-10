@@ -56,11 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         if ($Result2) {
             $InsertQuery1 = "INSERT INTO student (姓名,班级,level) VALUES ('$unam','$Class','$level') ;";
             $Result3 = mysql_query($InsertQuery1, $login);
-            if ($result3) {
-                echo '<script>alert("用户注册成功");history.go(-1);</script>';
+            if ($Result3) {
+                echo '<script>alert("用户注册成功");window.location.href = "../login.php";</script>';
                 exit;
-            }else{
-                echo '<script>alert("用户注册成功' . mysql_error() . '");history.go(-1);</script>';
             }
         } else {
             echo '<script>alert("注册失败' . mysql_error() . '");history.go(-1);</script>';

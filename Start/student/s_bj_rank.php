@@ -87,7 +87,7 @@ $totalPages_cj_rank = ceil($totalRows_cj_rank/$maxRows_cj_rank)-1;
 ?>
 <?php
 //下拉框
-$startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
+
 mysql_select_db($database_login, $login);
 $query_Recordset1 = "SELECT * FROM kc WHERE 届别 LIKE $level";
 $Recordset1 = mysql_query($query_Recordset1, $login) or die(mysql_error());

@@ -33,10 +33,10 @@ else{
 	mysql_select_db("marks",$login);
 	$result = mysql_query($sql,$login);
 	$row = mysql_fetch_assoc($result);
-	if ($row['power']=='1') {
+	if ($row['power']=='2') {
 		//如果是老师
 		echo"<script>var link=document.getElementById(\"kuang\");</script>";
-		echo"<script>link.src=\"Start/teacher.php\";</script>";
+		echo"<script>link.src=\"Start/2.php\";</script>";
 		} 
 	else{
 		//如果是学生

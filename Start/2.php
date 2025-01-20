@@ -1,6 +1,5 @@
 <!--学生侧边栏-->
 <?php $unam=$_COOKIE["admin"];
-$level=$_COOKIE["level"];
 $fun=$_COOKIE["fun"];
 ?>
 <?php require_once('../Connections/is_login.php'); ?>
@@ -27,12 +26,12 @@ $fun=$_COOKIE["fun"];
     if ($fun === '110') {
         // 显示 a 界面
         echo '<div class="xzk">
-                <a href="2/s_bj_rank.php" target="kuang">班成绩单</a>
+                <a href="2/cs.php" target="kuang">班成绩单</a>
               </div>';
     } elseif ($fun === '100') {
         // 显示 b 界面
         echo '<div class="xzk">
-                <a href="2/s_bj_rank.php" target="kuang">班成绩单</a>
+                <a href="2/cs.php" target="kuang">班成绩单</a>
               </div>';
     } else {
         // 默认显示内容
@@ -47,12 +46,12 @@ $fun=$_COOKIE["fun"];
     if ($fun === '110') {
         // 显示 a 界面
         echo '<div class="xzk">
-                <a href="2/s_all_rank.php" target="kuang">级成绩单</a>
+                <a href="2/all_rank.php" target="kuang">级成绩单</a>
               </div>';
     } elseif ($fun === '010') {
         // 显示 b 界面
         echo '<div class="xzk">
-                <a href="2/s_all_rank.php" target="kuang">级成绩单</a>
+                <a href="2/all_rank.php" target="kuang">级成绩单</a>
               </div>';
     } else {
         // 默认显示内容

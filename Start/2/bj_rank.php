@@ -2,7 +2,6 @@
 <?php require_once('../../Connections/is_login.php'); ?>
 <?php
 //GET接受课程数据
-$level=$_COOKIE["level"];
 if(isset($_GET['kcm'])){
 	$_kcm=$_GET['kcm'];
 	if (!function_exists("GetSQLValueString")) {
@@ -46,10 +45,8 @@ if (isset($_GET['pageNum_cj_rank'])) {
 $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
 
 $unam=$_COOKIE["admin"];
-mysql_select_db($database_login, $login);
-$query_st_msg = "SELECT * FROM student WHERE 姓名='$unam'";
-$st_msg = mysql_query($query_st_msg, $login) or die(mysql_error());
-$row_st_msg = mysql_fetch_assoc($st_msg);
+
+$banji=$row_st_msg['班级'];
 
 mysql_select_db($database_login, $login);
 $query_cj_rank = "select 姓名,班级,考试号,考试名,总成绩,总班,语,数,外,物,化,生,政,史,地 
@@ -60,7 +57,7 @@ from
 from cj
 join kc
 using(考试号)
-where 考试名='$_kcm' 
+where 考试名='$_kcm' and 班级='$banji'
 order by 总成绩 desc) a
 join (select @currank := 0 ) q
 ) b";
@@ -88,7 +85,7 @@ $totalPages_cj_rank = ceil($totalRows_cj_rank/$maxRows_cj_rank)-1;
 //下拉框
 
 mysql_select_db($database_login, $login);
-$query_Recordset1 = "SELECT * FROM kc WHERE 届别 LIKE $level";
+$query_Recordset1 = "SELECT * FROM kc ";
 $Recordset1 = mysql_query($query_Recordset1, $login) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 
@@ -122,7 +119,7 @@ function xuanze(){
 		<?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
 		</select>
 		</p>
-			<form id="kc_search" name="kc_search" method="get" action="s_all_rank.php" hidden="">
+			<form id="kc_search" name="kc_search" method="get" action="bj_rank.php" hidden="">
 			<p>
 					<label for="password"></label>
 					搜索课程：<input type="text" name="in_kc" id="in_kc" placeholder="请输入考试号或考试名"/>

@@ -48,7 +48,6 @@ if (isset($_GET['kcm'])) {
         $pageNum_cj_rank = $_GET['pageNum_cj_rank'];
     }
     $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
-    $unam = $_COOKIE["admin"];  // 获取管理员的用户名
 
     // 查询成绩数据
     mysql_select_db($database_login, $login);
@@ -112,8 +111,7 @@ function xuanze(){
 </script>
 <div id="box">
     <div class="search">
-        <div id="top1">
-            <form id="kc_search" name="kc_search" method="get" action="cs.php">
+            <form id="top1" name="kc_search" method="get" action="cs.php">
                 <!-- 选择课程名 -->
                 <select id="kc_sel" class=ksm onchange="xuanze()">
                     <option>考试名</option>
@@ -146,7 +144,6 @@ function xuanze(){
                 <button type="submit" name="submit" class="btn-submit">点击搜索</button>
                 <!-- <input type="submit" name="submit"  value="点击搜索" /> -->
             </form>
-        </div>
     </div>
 </div>
             <?php

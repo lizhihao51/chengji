@@ -8,36 +8,6 @@ if (isset($_GET['kcm'])) {
     $_kcm = $_GET['kcm'];  // 获取课程名
     $_bj = $_GET['bj'];    // 获取班级
 
-    // // SQL注入防止函数
-    // if (!function_exists("GetSQLValueString")) {
-    //     function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") {
-    //         if (PHP_VERSION < 6) {
-    //             $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-    //         }
-    //         $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-            
-    //         switch ($theType) {
-    //             case "text":
-    //                 $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-    //                 break;
-    //             case "long":
-    //             case "int":
-    //                 $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-    //                 break;
-    //             case "double":
-    //                 $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
-    //                 break;
-    //             case "date":
-    //                 $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-    //                 break;
-    //             case "defined":
-    //                 $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-    //                 break;
-    //         }
-    //         return $theValue;
-    //     }
-    // }
-
     // 获取当前页面和分页参数
     $currentPage = $_SERVER["PHP_SELF"];
     $maxRows_cj_rank = 20;

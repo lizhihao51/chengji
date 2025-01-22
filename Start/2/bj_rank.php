@@ -13,10 +13,11 @@ if (isset($_GET['pageNum_cj_rank'])) {
 $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
 
 // 获取搜索框的值
-$searchKaoShiHao = isset($_GET['kaoShiHao'])? $_GET['kaoShiHao'] : '';
-$searchXingMing = isset($_GET['xingMing'])? $_GET['xingMing'] : '';
-$searchBanJi = isset($_GET['banJi'])? $_GET['banJi'] : '';
-$searchKaoShiMing = isset($_GET['kaoShiMing'])? $_GET['kaoShiMing'] : '';
+$searchKaoShiHao = isset($_GET['kaoShiHao'])? $_GET['kaoShiHao'] : '';	//考试号
+$searchXingMing = isset($_GET['xingMing'])? $_GET['xingMing'] : '';	//姓名
+$searchBanJi = isset($_GET['banJi'])? $_GET['banJi'] : '';	//班级
+$searchKaoShiMing = isset($_GET['kaoShiMing'])? $_GET['kaoShiMing'] : '';  //考试名
+$searchRuXueNian = isset($_GET['ruXueNian'])? $_GET['ruXueNian'] : '';	//入学年
 
 // 获取课程数据
 mysql_select_db($database_login, $login);
@@ -39,9 +40,9 @@ $whereClause = '1 = 1';
 if (!empty($searchKaoShiHao)) {
     $whereClause.= " AND cj.考试号 = '". mysql_real_escape_string($searchKaoShiHao). "'";
 }
-// if (!empty($searchXingMing)) {
-//     $whereClause.= " AND cj.姓名 LIKE '%". mysql_real_escape_string($searchXingMing). "%'";
-// }
+if (!empty($searchXingMing)) {
+    $whereClause.= " AND cj.姓名 LIKE '%". mysql_real_escape_string($searchXingMing). "%'";
+}
 if (!empty($searchBanJi)) {
     $whereClause.= " AND cj.班级 = '". mysql_real_escape_string($searchBanJi). "'";
 }
@@ -50,7 +51,8 @@ if (!empty($searchKaoShiMing)) {
 }
 
 // 构建 SQL 查询语句
-$query_cj_rank = "SELECT cj.考试号, cj.姓名, cj.班级, cj.总成绩, cj.总班 FROM cj";
+$query_cj_rank = "SELECT cj.*, kc.考试名 FROM cj 
+                  JOIN kc ON cj.考试号 = kc.考试号";
 $query_cj_rank.= " WHERE ". $whereClause;
 
 // 先计算总记录数

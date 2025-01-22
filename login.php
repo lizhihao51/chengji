@@ -15,9 +15,18 @@ if(isset($_COOKIE['admin'])){
     <div class="header" id="head"><br/>学生成绩查询系统</div>
     <div id="gonggao">
         <br/>公告：</br>
-        本系统已清除所有数据，是之前的重构版，食用中可能会有bug，之前注册的账号需要重新注册，有问题者联系周至二中万能墙</br>
+        高三级一模考试成绩已经更新（历史类除外），化/生/政/地小四门科目会出现两个成绩，前者为原始分后者为赋分后。排名会出现三个以此为 班排名/校排名/县排名</br>
         <br>
     </div>
+    <script>
+        // 页面加载时触发输入确认
+        window.onload = function() {
+            // 弹出输入框，要求用户输入确认信息
+            alert("一模已经更新（历史类除外）\n化/生/政/地两个成绩，前为原始后为赋分。\n排名会三个以此为 班排名/校排名/县排名。");
+        };
+        
+    </script>
+
     <div class="container">
         <form id="user" name="user" method="POST" action="Connections/cookies.php">
             

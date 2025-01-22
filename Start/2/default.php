@@ -2,7 +2,6 @@
 require_once('../../Connections/login.php'); 
 require_once('../../Connections/is_login.php'); 
 
-
 $currentPage = $_SERVER["PHP_SELF"];
 
 $maxRows_cj_rank = 20;
@@ -12,9 +11,25 @@ if (isset($_GET['pageNum_cj_rank'])) {
 }
 $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
 
+// 获取搜索框的值
+$searchXueNian = isset($_GET['xueNian'])? $_GET['xueNian'] : '';
+$searchJieBie = isset($_GET['jieBie'])? $_GET['jieBie'] : '';
+$searchJiBie = isset($_GET['jiBie'])? $_GET['jiBie'] : '';
+
+$whereClause = '1 = 1';
+if (!empty($searchXueNian)) {
+    $whereClause.= " AND 学年 LIKE '%$searchXueNian%'";
+}
+if (!empty($searchJieBie)) {
+    $whereClause.= " AND 届别 LIKE '%$searchJieBie%'";
+}
+if (!empty($searchJiBie)) {
+    $whereClause.= " AND 年级 LIKE '%$searchJiBie%'";
+}
+
 mysql_select_db($database_login, $login);
-// 修改查询语句，直接从 kc 表中获取所需数据
-$query_cj_rank = "SELECT 考试号, 学年, 考试名, 届别, 年级, 总分, 备注 FROM kc";
+// 修改查询语句，根据筛选条件获取所需数据
+$query_cj_rank = "SELECT 考试号, 学年, 考试名, 届别, 年级, 总分, 备注 FROM kc WHERE $whereClause";
 $query_limit_cj_rank = sprintf("%s LIMIT %d, %d", $query_cj_rank, $startRow_cj_rank, $maxRows_cj_rank);
 $cj_rank = mysql_query($query_limit_cj_rank, $login) or die(mysql_error());
 $row_cj_rank = mysql_fetch_assoc($cj_rank);
@@ -39,26 +54,34 @@ $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
+<title>管理员默认页</title>
 <link href="style/style.css" rel="stylesheet" type="text/css">
 
 </head>
 
 <body>
 <div id="box">
-<div class="search">
-<div id="title3" class="title3">
-		<ul>
-			<li>学年</li>
-			<li>考试号</li>
-			<li>考试名</li>
-			<li>入学年</li>
-			<li>级别</li>
-			<li>总分</li>
-			<li>备注</li>
-		</ul>
-	</div>
-</div> 
+    <div class="search">
+        <form id="kc_search" name="kc_search" method="get" action="default.php">
+            <p>
+                学年：<input type="text" name="xueNian" value="<?php echo htmlspecialchars($searchXueNian);?>">
+                入学年：<input type="text" name="jieBie" value="<?php echo htmlspecialchars($searchJieBie);?>">
+                级别：<input type="text" name="jiBie" value="<?php echo htmlspecialchars($searchJiBie);?>">
+                <input type="submit" value="搜索">
+            </p>
+        </form>
+        <div id="title3" class="title3">
+            <ul>
+                <li>学年</li>
+                <li>考试号</li>
+                <li>考试名</li>
+                <li>入学年</li>
+                <li>级别</li>
+                <li>总分</li>
+                <li>备注</li>
+            </ul>
+        </div>
+    </div> 
     <?php
     // 输出计数
     echo "<div id=\"jishu\">共有 ";

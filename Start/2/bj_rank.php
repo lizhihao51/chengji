@@ -39,9 +39,9 @@ $whereClause = '1 = 1';
 if (!empty($searchKaoShiHao)) {
     $whereClause.= " AND cj.考试号 = '". mysql_real_escape_string($searchKaoShiHao). "'";
 }
-if (!empty($searchXingMing)) {
-    $whereClause.= " AND cj.姓名 LIKE '%". mysql_real_escape_string($searchXingMing). "%'";
-}
+// if (!empty($searchXingMing)) {
+//     $whereClause.= " AND cj.姓名 LIKE '%". mysql_real_escape_string($searchXingMing). "%'";
+// }
 if (!empty($searchBanJi)) {
     $whereClause.= " AND cj.班级 = '". mysql_real_escape_string($searchBanJi). "'";
 }
@@ -102,7 +102,7 @@ if (!empty($_GET)) {
         <form id="cj_search" name="cj_search" method="get" action="bj_rank.php">
             <p>
                 考试号：<input type="text" name="kaoShiHao" value="<?php echo htmlspecialchars($searchKaoShiHao);?>">
-                姓名：<input type="text" name="xingMing" value="<?php echo htmlspecialchars($searchXingMing);?>">
+                <!-- 姓名：<input type="text" name="xingMing" value="<?php echo htmlspecialchars($searchXingMing);?>"> -->
                 班级：
                 <select name="banJi">
                     <option value="">请选择班级</option>

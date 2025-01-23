@@ -29,7 +29,7 @@ if (!$courseResult) {
 
 // 获取班级数据
 mysql_select_db($database_login, $login);
-$classQuery = "SELECT 班级 FROM banji";
+$classQuery = "SELECT BJ FROM bj";
 $classResult = mysql_query($classQuery, $login);
 if (!$classResult) {
     die("班级数据查询失败: ". mysql_error());
@@ -38,24 +38,24 @@ if (!$classResult) {
 // 构建 WHERE 子句
 $whereClause = '1 = 1';
 if (!empty($searchKaoShiHao)) {
-    $whereClause.= " AND cj.考试号 = '". mysql_real_escape_string($searchKaoShiHao). "'";
+    $whereClause.= " AND cj.KSH = '". mysql_real_escape_string($searchKaoShiHao). "'";
 }
 if (!empty($searchXingMing)) {
-    $whereClause.= " AND cj.姓名 LIKE '%". mysql_real_escape_string($searchXingMing). "%'";
+    $whereClause.= " AND cj.XM LIKE '%". mysql_real_escape_string($searchXingMing). "%'";
 }
 if (!empty($searchBanJi)) {
-    $whereClause.= " AND cj.班级 = '". mysql_real_escape_string($searchBanJi). "'";
+    $whereClause.= " AND cj.BJ = '". mysql_real_escape_string($searchBanJi). "'";
 }
 if (!empty($searchKaoShiMing)) {
-    $whereClause.= " AND kc.考试名 = '". mysql_real_escape_string($searchKaoShiMing). "'";
+    $whereClause.= " AND kc.KSM = '". mysql_real_escape_string($searchKaoShiMing). "'";
 }
 if (!empty($searchRuXueNian )) {
-    $whereClause.= " AND kc.届别 = '". mysql_real_escape_string($searchRuXueNian). "'";
+    $whereClause.= " AND kc.RXN = '". mysql_real_escape_string($searchRuXueNian). "'";
 }
 
 // 构建 SQL 查询语句，关联 cj 表和 kc 表
-$query_cj_rank = "SELECT cj.*, kc.考试名 FROM cj 
-                  JOIN kc ON cj.考试号 = kc.考试号";
+$query_cj_rank = "SELECT cj.*, kc.KSM FROM cj 
+                  JOIN kc ON cj.KSH = kc.KSH";
 $query_cj_rank.= " WHERE ". $whereClause;
 
 // 先计算总记录数
@@ -117,14 +117,14 @@ if (!empty($_GET)) {
                 <select name="banJi">
                     <option value="">请选择班级</option>
                     <?php while ($classRow = mysql_fetch_assoc($classResult)) {?>
-                        <option value="<?php echo $classRow['班级'];?>" <?php if ($classRow['班级'] == $searchBanJi) echo'selected';?>><?php echo $classRow['班级'];?></option>
+                        <option value="<?php echo $classRow['BJ'];?>" <?php if ($classRow['BJ'] == $searchBanJi) echo'selected';?>><?php echo $classRow['BJ'];?></option>
                     <?php }?>
                 </select> -->
                 <!-- 考试名：
                 <select name="kaoShiMing">
                     <option value="">请选择考试名</option>
                     <?php while ($courseRow = mysql_fetch_assoc($courseResult)) {?>
-                        <option value="<?php echo $courseRow['考试名'];?>" <?php if ($courseRow['考试名'] == $searchKaoShiMing) echo'selected';?>><?php echo $courseRow['考试名'];?></option>
+                        <option value="<?php echo $courseRow['KSM'];?>" <?php if ($courseRow['KSM'] == $searchKaoShiMing) echo'selected';?>><?php echo $courseRow['KSM'];?></option>
                     <?php }?>
                 </select> -->
                 <input type="submit" value="搜索">
@@ -150,30 +150,30 @@ if (!empty($_GET)) {
         <?php while ($row_cj_rank = mysql_fetch_assoc($result)) :?>
             <div class="list1">
                 <ul>
-                <li><?php echo empty($row_cj_rank['姓名'])? '-' : $row_cj_rank['姓名'];?></li>
-                <li><?php echo empty($row_cj_rank['考试名'])? '-' : $row_cj_rank['考试名'];?></li> <!-- 显示考试名 -->
-                <li><?php echo empty($row_cj_rank['总成绩'])? '-' : $row_cj_rank['总成绩'];?></li>
-                <li><?php echo empty($row_cj_rank['语'])? '-' : $row_cj_rank['语'];?></li>
-                <li><?php echo empty($row_cj_rank['数'])? '-' : $row_cj_rank['数'];?></li>
-                <li><?php echo empty($row_cj_rank['外'])? '-' : $row_cj_rank['外'];?></li>
-                <li><?php echo empty($row_cj_rank['物'])? '-' : $row_cj_rank['物'];?></li>
-                <li><?php echo empty($row_cj_rank['化'])? '-' : $row_cj_rank['化'];?></li>
-                <li><?php echo empty($row_cj_rank['生'])? '-' : $row_cj_rank['生'];?></li>
-                <li><?php echo empty($row_cj_rank['政'])? '-' : $row_cj_rank['政'];?></li>
-                <li><?php echo empty($row_cj_rank['史'])? '-' : $row_cj_rank['史'];?></li>
-                <li><?php echo empty($row_cj_rank['地'])? '-' : $row_cj_rank['地'];?></li>
+                <li><?php echo empty($row_cj_rank['XM'])? '-' : $row_cj_rank['XM'];?></li>
+                <li><?php echo empty($row_cj_rank['KSM'])? '-' : $row_cj_rank['KSM'];?></li> <!-- 显示考试名 -->
+                <li><?php echo empty($row_cj_rank['ZCJ'])? '-' : $row_cj_rank['ZCJ'];?></li>
+                <li><?php echo empty($row_cj_rank['YWCJ'])? '-' : $row_cj_rank['YWCJ'];?></li>
+                <li><?php echo empty($row_cj_rank['SXCJ'])? '-' : $row_cj_rank['SXCJ'];?></li>
+                <li><?php echo empty($row_cj_rank['WYCJ'])? '-' : $row_cj_rank['WYCJ'];?></li>
+                <li><?php echo empty($row_cj_rank['WLCJ'])? '-' : $row_cj_rank['WLCJ'];?></li>
+                <li><?php echo empty($row_cj_rank['HXCJ'])? '-' : $row_cj_rank['HXCJ'];?></li>
+                <li><?php echo empty($row_cj_rank['SWCJ'])? '-' : $row_cj_rank['SWCJ'];?></li>
+                <li><?php echo empty($row_cj_rank['ZZCJ'])? '-' : $row_cj_rank['ZZCJ'];?></li>
+                <li><?php echo empty($row_cj_rank['LSCJ'])? '-' : $row_cj_rank['LSCJ'];?></li>
+                <li><?php echo empty($row_cj_rank['DLCJ'])? '-' : $row_cj_rank['DLCJ'];?></li>
                 <li>排  名</li>
                 <li>班/级</li>
-                <li><?php echo empty($row_cj_rank['总班'])? '-' : $row_cj_rank['总班'];?>/<?php echo empty($row_cj_rank['总级'])? '-' : $row_cj_rank['总级'];?></li>
-                <li><?php echo empty($row_cj_rank['语班'])? '-' : $row_cj_rank['语班'];?>/<?php echo empty($row_cj_rank['语级'])? '-' : $row_cj_rank['语级'];?></li>
-                <li><?php echo empty($row_cj_rank['数班'])? '-' : $row_cj_rank['数班'];?>/<?php echo empty($row_cj_rank['数级'])? '-' : $row_cj_rank['数级'];?></li>
-                <li><?php echo empty($row_cj_rank['外班'])? '-' : $row_cj_rank['外班'];?>/<?php echo empty($row_cj_rank['外级'])? '-' : $row_cj_rank['外级'];?></li>
-                <li><?php echo empty($row_cj_rank['物班'])? '-' : $row_cj_rank['物班'];?>/<?php echo empty($row_cj_rank['物级'])? '-' : $row_cj_rank['物级'];?></li>
-                <li><?php echo empty($row_cj_rank['化班'])? '-' : $row_cj_rank['化班'];?>/<?php echo empty($row_cj_rank['化级'])? '-' : $row_cj_rank['化级'];?></li>
-                <li><?php echo empty($row_cj_rank['生班'])? '-' : $row_cj_rank['生班'];?>/<?php echo empty($row_cj_rank['生级'])? '-' : $row_cj_rank['生级'];?></li>
-                <li><?php echo empty($row_cj_rank['政班'])? '-' : $row_cj_rank['政班'];?>/<?php echo empty($row_cj_rank['政级'])? '-' : $row_cj_rank['政级'];?></li>
-                <li><?php echo empty($row_cj_rank['史班'])? '-' : $row_cj_rank['史班'];?>/<?php echo empty($row_cj_rank['史级'])? '-' : $row_cj_rank['史级'];?></li>
-                <li><?php echo empty($row_cj_rank['地班'])? '-' : $row_cj_rank['地班'];?>/<?php echo empty($row_cj_rank['地级'])? '-' : $row_cj_rank['地级'];?></li>
+                <li><?php echo empty($row_cj_rank['ZBPM'])? '-' : $row_cj_rank['ZBPM'];?>/<?php echo empty($row_cj_rank['ZJPM'])? '-' : $row_cj_rank['ZJPM'];?></li>
+                <li><?php echo empty($row_cj_rank['YWBP'])? '-' : $row_cj_rank['YWBP'];?>/<?php echo empty($row_cj_rank['YWJP'])? '-' : $row_cj_rank['YWJP'];?></li>
+                <li><?php echo empty($row_cj_rank['SXBP'])? '-' : $row_cj_rank['SXBP'];?>/<?php echo empty($row_cj_rank['SXJP'])? '-' : $row_cj_rank['SXJP'];?></li>
+                <li><?php echo empty($row_cj_rank['WYBP'])? '-' : $row_cj_rank['WYBP'];?>/<?php echo empty($row_cj_rank['WYJP'])? '-' : $row_cj_rank['WYJP'];?></li>
+                <li><?php echo empty($row_cj_rank['WLBP'])? '-' : $row_cj_rank['WLBP'];?>/<?php echo empty($row_cj_rank['WLJP'])? '-' : $row_cj_rank['WLJP'];?></li>
+                <li><?php echo empty($row_cj_rank['HXBP'])? '-' : $row_cj_rank['HXBP'];?>/<?php echo empty($row_cj_rank['HXJP'])? '-' : $row_cj_rank['HXJP'];?></li>
+                <li><?php echo empty($row_cj_rank['SWBP'])? '-' : $row_cj_rank['SWBP'];?>/<?php echo empty($row_cj_rank['SWJP'])? '-' : $row_cj_rank['SWJP'];?></li>
+                <li><?php echo empty($row_cj_rank['ZZBP'])? '-' : $row_cj_rank['ZZBP'];?>/<?php echo empty($row_cj_rank['ZZJP'])? '-' : $row_cj_rank['ZZJP'];?></li>
+                <li><?php echo empty($row_cj_rank['LSBP'])? '-' : $row_cj_rank['LSBP'];?>/<?php echo empty($row_cj_rank['LSJP'])? '-' : $row_cj_rank['LSJP'];?></li>
+                <li><?php echo empty($row_cj_rank['DLBP'])? '-' : $row_cj_rank['DLBP'];?>/<?php echo empty($row_cj_rank['DLJP'])? '-' : $row_cj_rank['DLJP'];?></li>
 
                 </ul>
             </div>

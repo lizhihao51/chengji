@@ -29,7 +29,7 @@ if (!$courseResult) {
 
 // 获取班级数据
 mysql_select_db($database_login, $login);
-$classQuery = "SELECT 班级 FROM banji";
+$classQuery = "SELECT BJ FROM bj";
 $classResult = mysql_query($classQuery, $login);
 if (!$classResult) {
     die("班级数据查询失败: ". mysql_error());
@@ -38,21 +38,21 @@ if (!$classResult) {
 // 构建 WHERE 子句
 $whereClause = '1 = 1';
 if (!empty($searchKaoShiHao)) {
-    $whereClause.= " AND cj.考试号 = '". mysql_real_escape_string($searchKaoShiHao). "'";
+    $whereClause.= " AND cj.KSH = '". mysql_real_escape_string($searchKaoShiHao). "'";
 }
 if (!empty($searchXingMing)) {
-    $whereClause.= " AND cj.姓名 LIKE '%". mysql_real_escape_string($searchXingMing). "%'";
+    $whereClause.= " AND cj.XM LIKE '%". mysql_real_escape_string($searchXingMing). "%'";
 }
 if (!empty($searchBanJi)) {
-    $whereClause.= " AND cj.班级 = '". mysql_real_escape_string($searchBanJi). "'";
+    $whereClause.= " AND cj.BJ = '". mysql_real_escape_string($searchBanJi). "'";
 }
 if (!empty($searchKaoShiMing)) {
-    $whereClause.= " AND cj.考试号 = (SELECT 考试号 FROM kc WHERE 考试名 = '". mysql_real_escape_string($searchKaoShiMing). "')";
+    $whereClause.= " AND cj.KSH = (SELECT KSH FROM kc WHERE KSM = '". mysql_real_escape_string($searchKaoShiMing). "')";
 }
 
 // 构建 SQL 查询语句
-$query_cj_rank = "SELECT cj.*, kc.考试名 FROM cj 
-                  JOIN kc ON cj.考试号 = kc.考试号";
+$query_cj_rank = "SELECT cj.*, kc.KSM FROM cj 
+                  JOIN kc ON cj.KSH = kc.KSH";
 $query_cj_rank.= " WHERE ". $whereClause;
 
 // 先计算总记录数
@@ -109,14 +109,14 @@ if (!empty($_GET)) {
                 <select name="banJi">
                     <option value="">请选择班级</option>
                     <?php while ($classRow = mysql_fetch_assoc($classResult)) {?>
-                        <option value="<?php echo $classRow['班级'];?>" <?php if ($classRow['班级'] == $searchBanJi) echo'selected';?>><?php echo $classRow['班级'];?></option>
+                        <option value="<?php echo $classRow['BJ'];?>" <?php if ($classRow['BJ'] == $searchBanJi) echo'selected';?>><?php echo $classRow['BJ'];?></option>
                     <?php }?>
                 </select>
                 考试名：
                 <select name="kaoShiMing">
                     <option value="">请选择考试名</option>
                     <?php while ($courseRow = mysql_fetch_assoc($courseResult)) {?>
-                        <option value="<?php echo $courseRow['考试名'];?>" <?php if ($courseRow['考试名'] == $searchKaoShiMing) echo'selected';?>><?php echo $courseRow['考试名'];?></option>
+                        <option value="<?php echo $courseRow['KSM'];?>" <?php if ($courseRow['KSM'] == $searchKaoShiMing) echo'selected';?>><?php echo $courseRow['KSM'];?></option>
                     <?php }?>
                 </select>
                 <input type="submit" value="搜索">
@@ -141,11 +141,11 @@ if (!empty($_GET)) {
         <?php while ($row_cj_rank = mysql_fetch_assoc($result)) :?>
             <div class="list1">
                 <ul>
-                    <li><?php echo empty($row_cj_rank['考试号'])? '-' : $row_cj_rank['考试号'];?></li>
-                    <li><?php echo empty($row_cj_rank['姓名'])? '-' : $row_cj_rank['姓名'];?></li>
-                    <li><?php echo empty($row_cj_rank['班级'])? '-' : $row_cj_rank['班级'];?></li>
-                    <li><?php echo empty($row_cj_rank['总成绩'])? '-' : $row_cj_rank['总成绩'];?></li>
-                    <li><?php echo empty($row_cj_rank['总班'])? '-' : $row_cj_rank['总班'];?></li>
+                    <li><?php echo empty($row_cj_rank['KSH'])? '-' : $row_cj_rank['KSH'];?></li>
+                    <li><?php echo empty($row_cj_rank['XM'])? '-' : $row_cj_rank['XM'];?></li>
+                    <li><?php echo empty($row_cj_rank['BJ'])? '-' : $row_cj_rank['BJ'];?></li>
+                    <li><?php echo empty($row_cj_rank['ZCJ'])? '-' : $row_cj_rank['ZCJ'];?></li>
+                    <li><?php echo empty($row_cj_rank['ZBPM'])? '-' : $row_cj_rank['ZBPM'];?></li>
                 </ul>
             </div>
         <?php endwhile;?>

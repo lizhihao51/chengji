@@ -31,14 +31,14 @@ if (isset($_GET['id'])) {
     <form id="edit_user_form" name="edit_user_form" method="post" action="update_user.php">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($user['id']);?>">
         <p>
-            ID：<input type="text" name="username" value="<?php echo htmlspecialchars($user['username']);?>">
-            密码：<input type="text" name="password" value="<?php echo htmlspecialchars($user['password']);?>">
-            名称：<input type="text" name="unam" value="<?php echo htmlspecialchars($user['unam']);?>">
-            班级：<input type="text" name="banji" value="<?php echo htmlspecialchars($user['banji']);?>">
-            级别：<input type="text" name="level" value="<?php echo htmlspecialchars($user['level']);?>">
-            权限：<input type="text" name="power" value="<?php echo htmlspecialchars($user['power']);?>">
-            功能 1：<input type="text" name="fun1" value="<?php echo htmlspecialchars($user['fun1']);?>">
-            功能 2：<input type="text" name="fun2" value="<?php echo htmlspecialchars($user['fun2']);?>">
+            ID：<input type="text" name="username" value="<?php echo htmlspecialchars($user['username']);?>"><br>
+            密码：<input type="text" name="password" value="<?php echo htmlspecialchars($user['password']);?>"><br>
+            名称：<input type="text" name="unam" value="<?php echo htmlspecialchars($user['unam']);?>"><br>
+            班级：<input type="text" name="banji" value="<?php echo htmlspecialchars($user['banji']);?>"><br>
+            级别：<input type="text" name="level" value="<?php echo htmlspecialchars($user['level']);?>"><br>
+            权限：<input type="text" name="power" value="<?php echo htmlspecialchars($user['power']);?>"><br>
+            功能 1：<input type="text" name="fun1" value="<?php echo htmlspecialchars($user['fun1']);?>"><br>
+            功能 2：<input type="text" name="fun2" value="<?php echo htmlspecialchars($user['fun2']);?>"><br>
             <input type="submit" value="保存修改">
         </p>
     </form>

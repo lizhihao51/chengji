@@ -4,8 +4,9 @@
 
 <?php
 $unam=$_COOKIE["admin"];
+$level=$_COOKIE["level"];
 mysql_select_db($database_login, $login);
-$query_stu_msg = "SELECT * FROM student WHERE 姓名='$unam'";
+$query_stu_msg = "SELECT * FROM student WHERE XM='$unam'and level='$level'";
 
 $stu_msg = mysql_query($query_stu_msg, $login) or die(mysql_error());
 $row_stu_msg = mysql_fetch_assoc($stu_msg);
@@ -28,7 +29,7 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
 <table width="660">
     <tr>
         <td>学校：</td>
-        <td><?php echo $row_stu_msg['学校']; ?></td>
+        <td><?php echo $row_stu_msg['XX']; ?></td>
       </tr>
     <tr>
         <td>届别：</td>
@@ -36,27 +37,27 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
         </tr>
     <tr>
         <td>班级：</td>
-        <td><?php echo $row_stu_msg['班级']; ?></td>
+        <td><?php echo $row_stu_msg['BJ']; ?></td>
         </tr>
     <tr>
         <td>班别：</td>
-        <td><?php echo $row_stu_msg['班别']; ?></td>
+        <td><?php echo $row_stu_msg['BB']; ?></td>
       </tr>
         <td width="100">姓名：</td>
-        <td width="460"><?php echo $row_stu_msg['姓名']; ?></td>
+        <td width="460"><?php echo $row_stu_msg['XM']; ?></td>
       </tr>
     <tr>
         <td>性别：</td>
-        <td><?php echo $row_stu_msg['性别']; ?></td>
+        <td><?php echo $row_stu_msg['XB']; ?></td>
       </tr>
     <tr>
         <td>备注：</td>
-        <td><?php echo $row_stu_msg['备注']; ?></td>
+        <td><?php echo $row_stu_msg['BZ']; ?></td>
       </tr>
     
 </table>
 <button class="submit" onclick="tiao()">修改信息</button>
-<form action="t_xs_detail.php" method="post" hidden="">
+<form action="my_detail.php" method="post" hidden="">
     <input type="text" id="unam" name="unam" required />
 </form>
 </div>
@@ -67,7 +68,7 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
 </html>
 <script>
 function tiao(){
-	var url="s1_xs_mgr2.php?unam=<?php echo "$unam";?>";
+	var url="edit_student.php?unam=<?php echo "$unam";?>&id=<?php echo $row_stu_msg['id'];?>&level=<?php echo $row_stu_msg['level'];?>";
 	window.location.href=url;
 } 
 </script>

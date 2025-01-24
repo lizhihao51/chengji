@@ -18,18 +18,18 @@ $searchJiBie = isset($_GET['jiBie'])? $_GET['jiBie'] : '';
 
 $whereClause = '1 = 1';
 if (!empty($searchXueNian)) {
-    $whereClause.= " AND 学年 LIKE '%$searchXueNian%'";
+    $whereClause.= " AND XN LIKE '%$searchXueNian%'";
 }
 if (!empty($searchJieBie)) {
-    $whereClause.= " AND 届别 LIKE '%$searchJieBie%'";
+    $whereClause.= " AND RXN LIKE '%$searchJieBie%'";
 }
 if (!empty($searchJiBie)) {
-    $whereClause.= " AND 年级 LIKE '%$searchJiBie%'";
+    $whereClause.= " AND JB LIKE '%$searchJiBie%'";
 }
 
 mysql_select_db($database_login, $login);
 // 修改查询语句，根据筛选条件获取所需数据
-$query_cj_rank = "SELECT 考试号, 学年, 考试名, 届别, 年级, 总分, 备注 FROM kc WHERE $whereClause";
+$query_cj_rank = "SELECT * FROM kc WHERE $whereClause";
 $query_limit_cj_rank = sprintf("%s LIMIT %d, %d", $query_cj_rank, $startRow_cj_rank, $maxRows_cj_rank);
 $cj_rank = mysql_query($query_limit_cj_rank, $login) or die(mysql_error());
 $row_cj_rank = mysql_fetch_assoc($cj_rank);
@@ -112,13 +112,13 @@ $row_Recordset1 = mysql_fetch_assoc($Recordset1);
     do { 
         echo "<div class=\"list1\">";
         echo " <ul>";
-        echo " 	<li>";echo empty($row_cj_rank['学年'])? '-' : $row_cj_rank['学年'];  echo "</li>";
-        echo " 	<li>";echo empty($row_cj_rank['考试号'])? '-' : $row_cj_rank['考试号'];  echo "</li>";
-        echo " 	<li>";echo empty($row_cj_rank['考试名'])? '-' : $row_cj_rank['考试名'];  echo "</li>";
-        echo " 	<li>";echo empty($row_cj_rank['届别'])? '-' : $row_cj_rank['届别'];  echo "</li>";
-        echo " 	<li>";echo empty($row_cj_rank['年级'])? '-' : $row_cj_rank['年级'];  echo "</li>";
-        echo " 	<li>";echo empty($row_cj_rank['总分'])? '-' : $row_cj_rank['总分'];  echo "</li>";
-        echo " 	<li>";echo empty($row_cj_rank['备注'])? '-' : $row_cj_rank['备注'];  echo "</li>";
+        echo " 	<li>";echo empty($row_cj_rank['XN'])? '-' : $row_cj_rank['XN'];  echo "</li>";
+        echo " 	<li>";echo empty($row_cj_rank['KSH'])? '-' : $row_cj_rank['KSH'];  echo "</li>";
+        echo " 	<li>";echo empty($row_cj_rank['KSM'])? '-' : $row_cj_rank['KSM'];  echo "</li>";
+        echo " 	<li>";echo empty($row_cj_rank['RXN'])? '-' : $row_cj_rank['RXN'];  echo "</li>";
+        echo " 	<li>";echo empty($row_cj_rank['JB'])? '-' : $row_cj_rank['JB'];  echo "</li>";
+        echo " 	<li>";echo empty($row_cj_rank['ZF'])? '-' : $row_cj_rank['ZF'];  echo "</li>";
+        echo " 	<li>";echo empty($row_cj_rank['BZ'])? '-' : $row_cj_rank['BZ'];  echo "</li>";
         echo " </ul>";
         echo " </div>";
     } while ($row_cj_rank = mysql_fetch_assoc($cj_rank)); 

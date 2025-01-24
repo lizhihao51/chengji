@@ -16,11 +16,11 @@ $fun=$_COOKIE["fun"];
   <div id="left">
     <br>
     <div class="xzk">
-      <a href="student/t_xs_detail.php" target="kuang">个人信息</a>
+      <a href="student/my_detail.php" target="kuang">个人信息</a>
     </div>
 
     <div class="xzk">
-      <a href="student/s_my_msg.php" target="kuang">我的成绩</a>
+      <a href="student/cj.php" target="kuang">我的成绩</a>
     </div>
   <?php
     // 检查 status 的值，并显示对应的内容
@@ -37,7 +37,7 @@ $fun=$_COOKIE["fun"];
     } else {
         // 默认显示内容
         echo '<div class="xzk">
-                <a href="student/403.php" target="kuang">班成绩单</a>
+                <a href="student/s_bj_rank.php" target="kuang">班成绩单</a>
               </div>';
     }
   ?>
@@ -57,12 +57,12 @@ $fun=$_COOKIE["fun"];
     } else {
         // 默认显示内容
         echo '<div class="xzk">
-                <a href="student/403.php" target="kuang">级成绩单</a>
+                <a href="student/s_bj_rank.php" target="kuang">级成绩单</a>
               </div>';
     }
   ?>
     <div class="xzk">
-      <a href="student/jiagong.php" target="kuang">各科成绩</a>
+      <a href="student/my_cj.php" target="kuang">各科成绩</a>
     </div>
     <div class="xzk">
       <a href="student/s_admin_rank.php?unam=<?php echo "$unam";?>" target="kuang">修改密码</a>
@@ -72,7 +72,7 @@ $fun=$_COOKIE["fun"];
   
   <div id="right">
     <div id="main-bg">
-      <iframe id="kuang" src="student/t_xs_detail.php" scrolling="auto" name="kuang">
+      <iframe id="kuang" src="student/my_detail.php" scrolling="auto" name="kuang">
         </iframe>
     </div>
   </div>

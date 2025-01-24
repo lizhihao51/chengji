@@ -174,8 +174,8 @@ if (!empty($_GET)) {
 <body>
 <div id="box">
     <div class="search">
-    <form id="cj_search" name="cj_search" method="get" action="my_cj.php"hidden>
-            <p hidden="">
+    <form id="cj_search" name="cj_search" method="get" action="cj.php" hidden>
+            <p >
                 考试号：<input type="text" name="kaoShiHao" value="<?php echo htmlspecialchars($searchKaoShiHao);?>">
                 入学年：
                 <select name="ruXueNian">
@@ -254,20 +254,6 @@ if (!empty($_GET)) {
                     <li><?php echo empty($row_cj_rank['ZZBP'])? '-' : $row_cj_rank['ZZBP'];?>/<?php echo empty($row_cj_rank['ZZJP'])? '-' : $row_cj_rank['ZZJP'];?></li>
                     <li><?php echo empty($row_cj_rank['LSBP'])? '-' : $row_cj_rank['LSBP'];?>/<?php echo empty($row_cj_rank['LSJP'])? '-' : $row_cj_rank['LSJP'];?></li>
                     <li><?php echo empty($row_cj_rank['DLBP'])? '-' : $row_cj_rank['DLBP'];?>/<?php echo empty($row_cj_rank['DLJP'])? '-' : $row_cj_rank['DLJP'];?></li>
-                    
-                    <li>平均分</li>
-                    <li>班/级</li>
-                    <li>暂无</li>
-                    <li><?php echo empty($row_cj_rank['YWBPJF'])? '-' : $row_cj_rank['YWBPJF'];?>/<?php echo empty($row_cj_rank['YWJPJF'])? '-' : $row_cj_rank['YWJPJF'];?></li>
-                    <li><?php echo empty($row_cj_rank['SXBPJF'])? '-' : $row_cj_rank['SXBPJF'];?>/<?php echo empty($row_cj_rank['SXJPJF'])? '-' : $row_cj_rank['SXJPJF'];?></li>
-                    <li><?php echo empty($row_cj_rank['WYBPJF'])? '-' : $row_cj_rank['WYBPJF'];?>/<?php echo empty($row_cj_rank['WYJPJF'])? '-' : $row_cj_rank['WYJPJF'];?></li>
-                    <li><?php echo empty($row_cj_rank['WLBPJF'])? '-' : $row_cj_rank['WLBPJF'];?>/<?php echo empty($row_cj_rank['WLJPJF'])? '-' : $row_cj_rank['WLJPJF'];?></li>
-                    <li><?php echo empty($row_cj_rank['HXBPJF'])? '-' : $row_cj_rank['HXBPJF'];?>/<?php echo empty($row_cj_rank['HXJPJF'])? '-' : $row_cj_rank['HXJPJF'];?></li>
-                    <li><?php echo empty($row_cj_rank['SWBPJF'])? '-' : $row_cj_rank['SWBPJF'];?>/<?php echo empty($row_cj_rank['SWJPJF'])? '-' : $row_cj_rank['SWJPJF'];?></li>
-                    <li><?php echo empty($row_cj_rank['ZZBPJF'])? '-' : $row_cj_rank['ZZBPJF'];?>/<?php echo empty($row_cj_rank['ZZJPJF'])? '-' : $row_cj_rank['ZZJPJF'];?></li>
-                    <li><?php echo empty($row_cj_rank['LSBPJF'])? '-' : $row_cj_rank['LSBPJF'];?>/<?php echo empty($row_cj_rank['LSJPJF'])? '-' : $row_cj_rank['LSJPJF'];?></li>
-                    <li><?php echo empty($row_cj_rank['DLBPJF'])? '-' : $row_cj_rank['DLBPJF'];?>/<?php echo empty($row_cj_rank['DLJPJF'])? '-' : $row_cj_rank['DLJPJF'];?></li>
-                    
                 </ul>
             </div>
         <?php endwhile;?>

@@ -120,13 +120,13 @@ if (!empty($_GET)) {
                         <option value="<?php echo $classRow['BJ'];?>" <?php if ($classRow['BJ'] == $searchBanJi) echo'selected';?>><?php echo $classRow['BJ'];?></option>
                     <?php }?>
                 </select> -->
-                <!-- 考试名：
+                考试名：
                 <select name="kaoShiMing">
                     <option value="">请选择考试名</option>
                     <?php while ($courseRow = mysql_fetch_assoc($courseResult)) {?>
                         <option value="<?php echo $courseRow['KSM'];?>" <?php if ($courseRow['KSM'] == $searchKaoShiMing) echo'selected';?>><?php echo $courseRow['KSM'];?></option>
                     <?php }?>
-                </select> -->
+                </select>
                 <input type="submit" value="搜索">
             </p>
         </form>

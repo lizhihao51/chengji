@@ -1,15 +1,35 @@
 <?php
+session_start();
+// 从会话中获取学生信息
+$row_stu_msg = $_SESSION['row_stu_msg'];
+$le = $_SESSION['le'];
+$unam = $_SESSION['unam'];
+
+// 引入配置文件，假设该文件包含数据库连接信息
 require_once('../../Connections/login.php');
 require_once('../../Connections/is_login.php');
 
-// 确保输入框显示原内容
-$unam = $_GET['unam'];
-mysql_select_db($database_login, $login);
-$query_stu_msg = "SELECT * FROM student WHERE 姓名='$unam'";
-$stu_msg = mysql_query($query_stu_msg, $login) or die(mysql_error());
-$row_stu_msg = mysql_fetch_assoc($stu_msg);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $sex = $_POST["sex"];
+    $banb = $_POST["banb"];
+    $zym = $_POST["zym"];
+    $note = $_POST["note"];
+    $xx = $_POST["xx"];
 
-// HTML部分
+    // 修改学生信息
+    if ((isset($_POST["submit"])) && ($_POST["submit"] == "保存修改")) {
+        mysql_select_db($database_login, $login);
+        $SQL1 = "UPDATE student SET XB='$sex', BJ='$zym',BB='$banb',BZ='$note', XX='$xx' WHERE XM = '$unam'and level = '$le'";
+        $SQL2 = "UPDATE user SET banji='$zym' WHERE unam = '$unam'and level = '$le'";
+        $result1 = mysql_query($SQL1);
+        $result2 = mysql_query($SQL2);
+        if ($result1 and $result2) {
+            echo"<script>alert(\"记录更新成功\");url=\"my_detail.php\";window.location.href=url;</script>";
+        } else {
+            echo "记录更新失败: " . mysql_error();
+        }
+    }
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,17 +41,17 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
 <body>
   <div id="box">
     <div class="xxi">
-      <form action="s1_xs_mgr2.php" method="post" enctype="multipart/form-data">
+      <form action="edit_student.php" method="post" enctype="multipart/form-data">
         <table width="660">
           <tr><td>学校：</td>
-            <td><input class="xgk" type="text" id="xx" name="xx" placeholder="请输入学校" value="<?php echo $row_stu_msg['学校']; ?>" required/></td>
+            <td><input class="xgk" type="text" id="xx" name="xx" placeholder="请输入学校" value="<?php echo $row_stu_msg['XX']; ?>" required/></td>
           </tr>
           <tr><td>届别：</td>
             <td><input class="xgk" placeholder="<?php echo $row_stu_msg['level']; ?> 届" disabled/></td>
           </tr>
           <tr><td>班级：</td>
             <td>
-              <input class="xgk" type="text" id="zym" name="zym" placeholder="请输入班级" value="<?php echo $row_stu_msg['班级']; ?>" required/>
+              <input class="xgk" type="text" id="zym" name="zym" placeholder="请输入班级" value="<?php echo $row_stu_msg['BJ']; ?>" required/>
             </td>
           </tr>
           <tr>
@@ -51,7 +71,7 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
           <tr>
             <td width="100">姓名：</td>
             <td width="460">
-              <input class="xgk" placeholder="<?php echo $row_stu_msg['姓名']; ?>"disabled/>
+              <input class="xgk" placeholder="<?php echo $row_stu_msg['XM']; ?>"disabled/>
             </td>
           </tr>
           <tr>
@@ -71,33 +91,11 @@ $row_stu_msg = mysql_fetch_assoc($stu_msg);
           </tr>
           <tr>
             <td></td>
-            <td><input type="submit" name="submit" class="submit" value="确认修改"/></td>
+            <td><input type="submit" name="submit" value="保存修改"></td>
           </tr>
         </table>
       </form>
     </div>
-    <?php
-    mysql_select_db($database_login, $login);
-    $sex = $_POST["sex"];
-    $banb = $_POST["banb"];
-    $zym = $_POST["zym"];
-    $note = $_POST["note"];
-    $xx = $_POST["xx"];
-    $unam = $_COOKIE["admin"];
-
-    // 修改学生信息
-    if ((isset($_POST["submit"])) && ($_POST["submit"] == "确认修改")) {
-      $SQL1 = "UPDATE student SET 性别='$sex', 班级='$zym',班别='$banb',备注='$note', 学校='$xx' WHERE 姓名='$unam'";
-      $SQL2 = "UPDATE user SET banji='$zym' WHERE unam='$unam'";
-      $result1 = mysql_query($SQL1);
-      $result2 = mysql_query($SQL2);
-      if ($result1 and $result2) {
-        echo"<script>alert(\"记录更新成功\");url=\"t_xs_detail.php\";window.location.href=url;</script>";
-      } else {
-        echo "记录更新失败: " . mysql_error();
-      }
-    }
-    ?>
   </div>
 </body>
 </html>

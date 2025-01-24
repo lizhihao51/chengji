@@ -21,12 +21,12 @@ require_once('../../Connections/is_login.php');
     $paw = isset($_POST['paw']) ? $_POST['paw'] : ''; // 如果 `paw` 存在则赋值，否则为空字符串
     $paws = isset($_POST['paws']) ? $_POST['paws'] : ''; // 如果 `paws` 存在则赋值，否则为空字符串
     $unam = isset($_COOKIE["admin"]) ? $_COOKIE["admin"] : ''; // 检查 `admin` cookie 是否存在
-    
+    $level = isset($_COOKIE["level"]) ? $_COOKIE["level"] : '';
     // 修改学生信息
     if (isset($_POST["submit"]) && $_POST["submit"] == "修改密码") {
       // 判断 paw 和 paws 是否相等
       if ($paw === $paws && !empty($paw)) {
-        $SQL = "UPDATE user SET password='$paw' WHERE unam='$unam'";
+        $SQL = "UPDATE user SET password='$paw' WHERE unam='$unam' and level='$level'";
         $result = mysql_query($SQL);
     
         if ($result) {

@@ -1,98 +1,101 @@
-<?php require_once('../../Connections/login.php'); ?>
-<?php require_once('../../Connections/is_login.php'); ?>
 <?php
-//GET接受课程数据
-$level=$_COOKIE["level"];
-if(isset($_GET['kcm'])){
-	$_kcm=$_GET['kcm'];
-	if (!function_exists("GetSQLValueString")) {
-	function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-	{
-	if (PHP_VERSION < 6 	) {
-		$theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-	}
-	
-	$theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-	
-	switch ($theType) {
-		case "text":
-			$theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-			break;    
-		case "long":
-		case "int":
-			$theValue = ($theValue != "") ? intval($theValue) : "NULL";
-			break;
-		case "double":
-			$theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
-			break;
-		case "date":
-			$theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-			break;
-		case "defined":
-			$theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-			break;
-	}
-	return $theValue;
-	}
-	}
-	$currentPage = $_SERVER["PHP_SELF"];
-	
+// 引入配置文件，假设该文件包含数据库连接信息
+require_once('../../Connections/login.php'); 
+require_once('../../Connections/is_login.php'); 
 
+// 初始化变量
+$currentPage = $_SERVER["PHP_SELF"];
 $maxRows_cj_rank = 20;
 $pageNum_cj_rank = 0;
 if (isset($_GET['pageNum_cj_rank'])) {
-	$pageNum_cj_rank = $_GET['pageNum_cj_rank'];
+    $pageNum_cj_rank = $_GET['pageNum_cj_rank'];
 }
 $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
 
-$unam=$_COOKIE["admin"];
-mysql_select_db($database_login, $login);
-$query_st_msg = "SELECT * FROM student WHERE 姓名='$unam'";
-$st_msg = mysql_query($query_st_msg, $login) or die(mysql_error());
-$row_st_msg = mysql_fetch_assoc($st_msg);
-$banji=$row_st_msg['班级'];
+// 获取搜索框的值
 
-mysql_select_db($database_login, $login);
-$query_cj_rank = "select 姓名,班级,考试号,考试名,总成绩,总班,语,数,外,物,化,生,政,史,地 
-from(
-select 姓名,班级,考试号,考试名,总成绩,总班,语,数,外,物,化,生,政,史,地 
-from 
-(select 姓名,班级,考试号,kc.考试名,cj.总成绩,总班,语,数,外,物,化,生,政,史,地 
-from cj
-join kc
-using(考试号)
-where 考试名='$_kcm' and 班级='$banji'
-order by 总成绩 desc) a
-join (select @currank := 0 ) q
-) b";
-$query_limit_cj_rank = sprintf("%s LIMIT %d, %d", $query_cj_rank, $startRow_cj_rank, $maxRows_cj_rank);
-$cj_rank = mysql_query($query_limit_cj_rank, $login) or die(mysql_error());
-$row_cj_rank = mysql_fetch_assoc($cj_rank);
+// $searchXingMing=$_COOKIE["admin"];
+$searchRuXueNian=$_COOKIE["level"];
+$searchBanJi = $_COOKIE["bj"];	//班级
+$searchKaoShiHao = isset($_GET['kaoShiHao'])? $_GET['kaoShiHao'] : '';	//考试号
+$searchKaoShiMing = isset($_GET['kaoShiMing'])? $_GET['kaoShiMing'] : '';  //考试名
 
-if (isset($_GET['totalRows_cj_rank'])) {
-	$totalRows_cj_rank = $_GET['totalRows_cj_rank'];
-} else {
-	$all_cj_rank = mysql_query($query_cj_rank);
-	$totalRows_cj_rank = mysql_num_rows($all_cj_rank);
+// 获取课程数据
+mysql_select_db($database_login, $login);
+// 根据入学年筛选课程数据
+$courseQuery = "SELECT * FROM kc WHERE RXN LIKE '". mysql_real_escape_string($searchRuXueNian). "'";
+
+$courseResult = mysql_query($courseQuery, $login);
+if (!$courseResult) {
+    die("课程数据查询失败: ". mysql_error());
 }
-$totalPages_cj_rank = ceil($totalRows_cj_rank/$maxRows_cj_rank)-1;
 
-
-}
-//--------------------
-
-
-
-
-?>
-<?php
-//下拉框
-
+// 获取班级数据
 mysql_select_db($database_login, $login);
-$query_Recordset1 = "SELECT * FROM kc WHERE 届别 LIKE $level";
-$Recordset1 = mysql_query($query_Recordset1, $login) or die(mysql_error());
-$row_Recordset1 = mysql_fetch_assoc($Recordset1);
+$classQuery = "SELECT BJ FROM bj";
+$classResult = mysql_query($classQuery, $login);
+if (!$classResult) {
+    die("班级数据查询失败: ". mysql_error());
+}
 
+// 构建 WHERE 子句
+$whereClause = '1 = 1';
+if (!empty($searchKaoShiHao)) {
+    $whereClause.= " AND cj.KSH = '". mysql_real_escape_string($searchKaoShiHao). "'";
+}
+if (!empty($searchXingMing)) {
+    $whereClause.= " AND cj.XM LIKE '%". mysql_real_escape_string($searchXingMing). "%'";
+}
+if (!empty($searchBanJi)) {
+    $whereClause.= " AND cj.BJ = '". mysql_real_escape_string($searchBanJi). "'";
+}
+if (!empty($searchKaoShiMing)) {
+    $whereClause.= " AND cj.KSH = (SELECT KSH FROM kc WHERE KSM = '". mysql_real_escape_string($searchKaoShiMing). "')";
+}
+if (!empty($searchRuXueNian)) {
+    $whereClause.= " AND cj.KSH IN (SELECT KSH FROM kc WHERE RXN = '". mysql_real_escape_string($searchRuXueNian). "')";
+}
+
+// 构建 SQL 查询语句
+$query_cj_rank = "SELECT cj.*, kc.KSM FROM cj 
+                  JOIN kc ON cj.KSH = kc.KSH";
+$query_cj_rank.= " WHERE ". $whereClause;
+
+// 添加 ORDER BY 子句，先按考试号升序排序，再按总成绩降序排序
+$query_cj_rank.= " ORDER BY  cj.KSH ASC, cj.ZCJ Desc";
+
+// 先计算总记录数
+$allResult = mysql_query($query_cj_rank, $login);
+if (!$allResult) {
+    die("总记录数查询失败: ". mysql_error());
+}
+$totalRows_cj_rank = mysql_num_rows($allResult);
+$totalPages_cj_rank = ceil($totalRows_cj_rank / $maxRows_cj_rank);
+
+
+// 再添加 LIMIT 子句进行分页查询
+$query_limit_cj_rank = $query_cj_rank. " LIMIT ". $startRow_cj_rank. ", ". $maxRows_cj_rank;
+
+
+// 执行分页查询
+$result = mysql_query($query_limit_cj_rank, $login);
+if (!$result) {
+    die("查询失败: ". mysql_error());
+}
+
+
+// 构建查询字符串，用于分页链接
+$queryString_cj_rank = '';
+if (!empty($_GET)) {
+    $param_pairs = [];
+    foreach ($_GET as $key => $value) {
+        // 不再排除任何参数，确保所有参数都包含在分页链接中
+        $param_pairs[] = urlencode($key). '='. urlencode($value);
+    }
+    if (!empty($param_pairs)) {
+        $queryString_cj_rank = '?'. implode('&', $param_pairs);
+    }
+}
 ?>
 
 
@@ -100,201 +103,91 @@ $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
+<title>管理员默认页</title>
 <link href="style/style.css" rel="stylesheet" type="text/css">
-
 </head>
-
 <body>
-<script>
-function xuanze(){
-    document.getElementById("in_kc").value=document.getElementById("sel").value;
-	document.getElementById('submit0').click();
-    }
-</script>
 <div id="box">
-	<div class="search">
-		<p id="top1">
-		考试名:
-		<select id="sel" onchange="xuanze()">
-		<option>请选择课程</option>
-		<?php do { ?>
-		<option value="<?php echo $row_Recordset1['考试名']; ?>"><?php echo $row_Recordset1['考试名']; ?></option>
-		<?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
-		</select>
-		</p>
-			<form id="kc_search" name="kc_search" method="get" action="s_bj_rank.php" hidden="">
-			<p>
-					<label for="password"></label>
-					搜索课程：<input type="text" name="in_kc" id="in_kc" placeholder="请输入考试号或考试名"/>
-					<?php 
-			if (isset($_REQUEST['kcm'])){
-				echo "<input type=\"hidden\"  name=\"kcm\" value=\"";
-				echo $_REQUEST['kcm'];
-				echo "\"/>";
-			}
-			if(isset($_GET['in_kc'])){
-				$words=$_GET['in_kc'];
-				echo "<script>document.getElementById('in_kc').value = $words;</script>";	
-				echo "<script>document.getElementById('sel').value = \"$words\";</script>";
-				
-				
-			}
-			
-			?>
-					
-					<input type="submit" name="submit" id="submit0" value="点击搜索" />
-			
-			</p>
-			</form>
-	<?php
-		//搜索课程
-	if(isset($_GET['submit'])){
-		mysql_select_db($database_login, $login);
-		$words=$_GET['in_kc'];
-		$query_search_kc = "select 考试号,考试名 from kc where 考试名 like '%$words%' or 考试号 like '%$words%'";
-		$search_kc = mysql_query($query_search_kc, $login) or die(mysql_error());
-		$row_search_kc = mysql_fetch_assoc($search_kc);
-		$totalRows_search_kc = mysql_num_rows($search_kc);
-		
-		//+++++
-		$queryString_kcm = "";
-	if (!empty($_SERVER['QUERY_STRING'])) {
-	$params = explode("&", $_SERVER['QUERY_STRING']);
-	$newParams = array();
-	foreach ($params as $param) {
-			if (stristr($param, "pageNum_cj_rank") == false && 
-					stristr($param, "totalRows_cj_rank") == false &&
-			stristr($param, "kcm") == false){
-			array_push($newParams, $param);
-			}
-	}
-		if (count($newParams) != 0) {
-			$queryString_kcm = "&" . htmlentities(implode("&", $newParams));
-	}
-	}
-	echo "<script>var url=\"";
-	printf ("%s?kcm=%s%s", $currentPage, $row_search_kc['考试名'],$queryString_kcm); 	
-	echo "\";window.location.href=url;</script>";
-	}
-	?>
-	</div>
-	<?php
-	//输出计数
-	if(isset($_GET['kcm']))
-	{
-		echo "<div id=\"jishu\">共有 ";
-		echo $totalRows_cj_rank ; 
-		echo "条记录，目前显示第";
-		echo ($startRow_cj_rank + 1);
-		echo "条至第";
-		echo min($startRow_cj_rank + $maxRows_cj_rank, $totalRows_cj_rank);
-		echo "条</div>";
-	}
-	?>
-	<div id="title3" class="title3">
-		<ul>
-			<li>姓名</li>
-			<li>总分</li>
-			<li>班排名</li>
-			<li>语</li>
-			<li>数</li>
-			<li>外</li>
-			<li>物</li>
-			<li>化</li>
-			<li>生</li>
-			<li>政</li>
-			<li>史</li>
-			<li>地</li>
-		</ul>
-	</div>
-
-	<div id="sss" class="list2" style="text-align:center;">目前还没有搜索任何信息</div>
-			
-	<?php
-	//输出课程查询
-	if(isset($_GET['kcm']))
-	{
-		$queryString_cj_rank = "";
-	if (!empty($_SERVER['QUERY_STRING'])) {
-	$params = explode("&", $_SERVER['QUERY_STRING']);
-	$newParams = array();
-	foreach ($params as $param) {
-			if (stristr($param, "pageNum_cj_rank") == false && 
-				stristr($param, "totalRows_cj_rank") == false &&
-			stristr($param, "kcm") == false) {
-			array_push($newParams, $param);
-			}
-	}
-		if (count($newParams) != 0) {
-			$queryString_cj_rank = "&" . htmlentities(implode("&", $newParams));
-	}
-	}
-	/*$queryString_cj_rank = sprintf("&totalRows_cj_rank=%d%s", $totalRows_cj_rank, $queryString_cj_rank);*/
-		
-		echo "<script>document.getElementById(\"sss\").style.display=\"none\";</script>"; 
-		do { 
-			echo "<div class=\"list1\">";
-			echo " <ul>";
-			echo " 	<li>";echo empty($row_cj_rank['姓名']) ? '-' : $row_cj_rank['姓名'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['总成绩']) ? '-' : $row_cj_rank['总成绩'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['总班']) ? '-' : $row_cj_rank['总班'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['语']) ? '-' : $row_cj_rank['语'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['数']) ? '-' : $row_cj_rank['数'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['外']) ? '-' : $row_cj_rank['外'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['物']) ? '-' : $row_cj_rank['物'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['化']) ? '-' : $row_cj_rank['化'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['生']) ? '-' : $row_cj_rank['生'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['政']) ? '-' : $row_cj_rank['政'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['史']) ? '-' : $row_cj_rank['史'];  echo "</li>";
-			echo " 	<li>";echo empty($row_cj_rank['地']) ? '-' : $row_cj_rank['地'];  echo "</li>";
-			echo " </ul>";
-			echo " </div>";
-			} while ($row_cj_rank = mysql_fetch_assoc($cj_rank)); 
-			if ($totalRows_cj_rank == 0) {
-				echo "<div class=\"list2\" style=\"text-align:center;\">目前还没有添加任何信息</div>";
-			} 
-			echo "<div id=\"menu\">";
-			if ($pageNum_cj_rank > 0 or $pageNum_cj_rank < $totalPages_cj_rank ) {
-				echo "<div id=\"xzys\">";
-			}
-			if ($pageNum_cj_rank > 0) {
-				echo "<a href=\"";
-				printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'],  0, $queryString_cj_rank);
-				echo "\"><img src=\"imgs/1.png\" width=\"50px\" height=\"50px\"></a> ";
-			}
-			else {
-				echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
-			}
-			//----
-			if ($pageNum_cj_rank > 0) {
-				echo "<a href=\"";
-				printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'],  max(0, $pageNum_cj_rank - 1), $queryString_cj_rank); 
-				echo "\"><img src=\"imgs/2.png\" width=\"50px\" height=\"50px\"></a> ";
-			}
-			else {
-				echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
-			}
-			//----
-			if ($pageNum_cj_rank < $totalPages_cj_rank) {
-				echo "<a href=\"";
-				printf("%s?kcm=%s&pageNum_cj_rank=%d%s", $currentPage,$_GET['kcm'], min($totalPages_cj_rank, $pageNum_cj_rank + 1), $queryString_cj_rank);
-				echo "\"><img src=\"imgs/3.png\" width=\"50px\" height=\"50px\"></a> ";
-			}
-			else {
-				echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
-			}
-			if ($pageNum_cj_rank < $totalPages_cj_rank) {
-				echo "<a href=\"";
-				printf("%s?kcm=%s&pageNum_cj_rank=%d%s",  $currentPage, $_GET['kcm'],$totalPages_cj_rank, $queryString_cj_rank); 
-				echo "\"><img src=\"imgs/4.png\" width=\"50px\" height=\"50px\"></a> ";
-			}
-			else {
-				echo "<a><img src=\"imgs/w.png\" width=\"50px\" height=\"0px\"></a>";
-			}
-			echo "</div></div>";
-		}
-	?>
+    <div class="search">
+        <form id="cj_search" name="cj_search" method="get" action="s_bj_rank.php">
+            <p>
+                考试号：<input type="text" id="ks"name="kaoShiHao" value="<?php echo htmlspecialchars($searchKaoShiHao);?>">
+                <!-- 入学年：
+                <select name="ruXueNian">
+                    <option value="">请选择入学年</option>
+   
+                        <option value="2022">22</option>
+                        <option value="2023">23</option>
+                        <option value="2024">24</option>
+                </select> -->
+                考试名：
+                <select name="kaoShiMing">
+                <option value="">请选择考试名</option>
+                    <?php while ($courseRow = mysql_fetch_assoc($courseResult)) {?>
+                        <option value="<?php echo $courseRow['KSM'];?>" <?php if ($courseRow['KSM'] == $searchKaoShiMing) echo'selected';?>><?php echo $courseRow['KSM'];?></option>
+                    <?php }?>
+                </select>
+                <input type="submit" class="btn-submit" value="搜索">
+            </p>
+        </form>
+        <div id="title3" class="title3">
+            <ul>
+                <li>考试号</li>
+                <li>考试名</li>
+                <li>姓名</li>
+                <li>班级</li>
+                <li>总分</li>
+                <li>班排名</li>
+                <li>总排名</li>
+            </ul>
+        </div>
+    </div> 
+    <div id="jishu">
+        共有 <?php echo $totalRows_cj_rank ;?> 条记录，目前显示第 <?php echo ($startRow_cj_rank + 1);?> 条至第 <?php echo min($startRow_cj_rank + $maxRows_cj_rank, $totalRows_cj_rank);?> 条
+    </div>
+    <?php if ($totalRows_cj_rank == 0) :?>
+        <div class="list2" style="text-align:center;">目前还没有添加任何信息</div>
+    <?php else :?>
+        <?php while ($row_cj_rank = mysql_fetch_assoc($result)) :?>
+            <div class="list1">
+                <ul>
+                    <li><?php echo empty($row_cj_rank['KSH'])? '-' : $row_cj_rank['KSH'];?></li>
+                    <li><?php echo empty($row_cj_rank['KSM'])? '-' : $row_cj_rank['KSM'];?></li>
+                    <li><?php echo empty($row_cj_rank['XM'])? '-' : $row_cj_rank['XM'];?></li>
+                    <li><?php echo empty($row_cj_rank['BJ'])? '-' : $row_cj_rank['BJ'];?></li>
+                    <li><?php echo empty($row_cj_rank['ZCJ'])? '-' : $row_cj_rank['ZCJ'];?></li>
+                    <li><?php echo empty($row_cj_rank['ZBPM'])? '-' : $row_cj_rank['ZBPM'];?></li>
+                    <li><?php echo empty($row_cj_rank['ZJPM'])? '-' : $row_cj_rank['ZJPM'];?></li>
+                </ul>
+            </div>
+        <?php endwhile;?>
+    <?php endif;?>
+    <div id="menu">
+        <?php if ($pageNum_cj_rank > 0 || $pageNum_cj_rank < $totalPages_cj_rank ) :?>
+            <div id="xzys">
+        <?php endif;?>
+        <?php if ($pageNum_cj_rank > 0) :?>
+            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage,  0, $queryString_cj_rank);?>"><img src="imgs/1.png" width="50px" height="50px"></a> 
+        <?php else :?>
+            <a><img src="imgs/w.png" width="50px" height="0px"></a>
+        <?php endif;?>
+        <?php if ($pageNum_cj_rank > 0) :?>
+            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage,  max(0, $pageNum_cj_rank - 1), $queryString_cj_rank);?>"><img src="imgs/2.png" width="50px" height="50px"></a> 
+        <?php else :?>
+            <a><img src="imgs/w.png" width="50px" height="0px"></a>
+        <?php endif;?>
+        <?php if ($pageNum_cj_rank+1 < $totalPages_cj_rank) :?>
+            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage, min($totalPages_cj_rank, $pageNum_cj_rank + 1), $queryString_cj_rank);?>"><img src="imgs/3.png" width="50px" height="50px"></a> 
+        <?php else :?>
+            <a><img src="imgs/w.png" width="50px" height="0px"></a>
+        <?php endif;?>
+        <?php if ($pageNum_cj_rank+1 < $totalPages_cj_rank) :?>
+            <a href="<?php printf("%s?pageNum_cj_rank=%d%s",  $currentPage, $totalPages_cj_rank, $queryString_cj_rank);?>"><img src="imgs/4.png" width="50px" height="50px"></a> 
+        <?php else :?>
+            <a><img src="imgs/w.png" width="50px" height="0px"></a>
+        <?php endif;?>
+        </div>
+    </div>
 </div>
 </body>
 </html>

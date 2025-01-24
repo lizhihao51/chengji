@@ -21,7 +21,7 @@ if (isset($_POST['id'])) {
     if (!$result) {
         die("更新失败: ". mysql_error());
     } else {
-        header("Location: personal_score.php");
+        header("Location: user_psw.php");
     }
 } else {
     die("无效的请求");

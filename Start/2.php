@@ -6,7 +6,7 @@ $fun=$_COOKIE["fun"];
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>学生管理界面</title>
+<title>超级管理员</title>
 <link href="style/student.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -36,7 +36,7 @@ $fun=$_COOKIE["fun"];
     } else {
         // 默认显示内容
         echo '<div class="xzk">
-                <a href="2/403.php" target="kuang">班成绩单</a>
+                <a href="2/bj_rank.php" target="kuang">班成绩单</a>
               </div>';
     }
   ?>
@@ -56,7 +56,7 @@ $fun=$_COOKIE["fun"];
     } else {
         // 默认显示内容
         echo '<div class="xzk">
-                <a href="2/403.php" target="kuang">级成绩单</a>
+                <a href="2/bj_rank.php" target="kuang">级成绩单</a>
               </div>';
     }
   ?>

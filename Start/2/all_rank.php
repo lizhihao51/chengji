@@ -62,6 +62,8 @@ $query_cj_rank = "SELECT cj.*, kc.KSM FROM cj
                   JOIN kc ON cj.KSH = kc.KSH";
 $query_cj_rank.= " WHERE ". $whereClause;
 
+$query_cj_rank.= " ORDER BY  cj.KSH ASC, cj.ZCJ Desc";
+
 // 先计算总记录数
 $allResult = mysql_query($query_cj_rank, $login);
 if (!$allResult) {

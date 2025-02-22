@@ -30,17 +30,19 @@ if (isset($_GET['id'])) {
 <div id="box">
     <form id="edit_user_form" name="edit_user_form" method="post" action="update_user.php">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($user['id']);?>">
-        <p>
-            ID：<input type="text" name="username" value="<?php echo htmlspecialchars($user['username']);?>"><br>
-            密码：<input type="text" name="password" value="<?php echo htmlspecialchars($user['password']);?>"><br>
-            名称：<input type="text" name="unam" value="<?php echo htmlspecialchars($user['unam']);?>"><br>
-            班级：<input type="text" name="banji" value="<?php echo htmlspecialchars($user['banji']);?>"><br>
-            级别：<input type="text" name="level" value="<?php echo htmlspecialchars($user['level']);?>"><br>
-            权限：<input type="text" name="power" value="<?php echo htmlspecialchars($user['power']);?>"><br>
-            功能 1：<input type="text" name="fun1" value="<?php echo htmlspecialchars($user['fun1']);?>"><br>
-            功能 2：<input type="text" name="fun2" value="<?php echo htmlspecialchars($user['fun2']);?>"><br>
-            <input type="submit" value="保存修改">
-        </p>
+        <div id="edit">
+        <table width="300" height="300">
+            <tr><td>ID：</td><td><input type="text" name="username" value="<?php echo htmlspecialchars($user['username']);?>"></td></tr>
+            <tr><td>密码：</td><td><input type="text" name="password" value="<?php echo htmlspecialchars($user['password']);?>"></td></tr>
+            <tr><td>名称：</td><td><input type="text" name="unam" value="<?php echo htmlspecialchars($user['unam']);?>"></td></tr>
+            <tr><td>班级：</td><td><input type="text" name="banji" value="<?php echo htmlspecialchars($user['banji']);?>"></td></tr>
+            <tr><td>级别：</td><td><input type="text" name="level" value="<?php echo htmlspecialchars($user['level']);?>"></td></tr>
+            <tr><td>权限：</td><td><input type="text" name="power" value="<?php echo htmlspecialchars($user['power']);?>"></td></tr>
+            <tr><td>功能 1：</td><td><input type="text" name="fun1" value="<?php echo htmlspecialchars($user['fun1']);?>"></td></tr>
+            <tr><td>功能 2：</td><td><input type="text" name="fun2" value="<?php echo htmlspecialchars($user['fun2']);?>"></td></tr>
+        </table>
+        <input type="submit" value="保存修改">
+        </div>
     </form>
 </div>
 </body>

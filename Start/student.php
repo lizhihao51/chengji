@@ -57,7 +57,7 @@ $fun=$_COOKIE["fun"];
     } else {
         // 默认显示内容
         echo '<div class="xzk">
-                <a href="student/s_bj_rank.php" target="kuang">级成绩单</a>
+                <a href="student/s_all_rank.php" target="kuang">级成绩单</a>
               </div>';
     }
   ?>

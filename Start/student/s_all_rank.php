@@ -16,6 +16,8 @@ $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
 
 // $searchXingMing=$_COOKIE["admin"];
 $searchRuXueNian=$_COOKIE["level"];
+$searchXianXueNian=$_COOKIE["time_xn"];
+
 // $searchBanJi = $_COOKIE["bj"];	//班级
 $searchKaoShiHao = isset($_GET['kaoShiHao'])? $_GET['kaoShiHao'] : '';	//考试号
 $searchKaoShiMing = isset($_GET['kaoShiMing'])? $_GET['kaoShiMing'] : '';  //考试名
@@ -23,7 +25,7 @@ $searchKaoShiMing = isset($_GET['kaoShiMing'])? $_GET['kaoShiMing'] : '';  //考
 // 获取课程数据
 mysql_select_db($database_login, $login);
 // 根据入学年筛选课程数据
-$courseQuery = "SELECT * FROM kc WHERE RXN LIKE '". mysql_real_escape_string($searchRuXueNian). "'";
+$courseQuery = "SELECT * FROM kc WHERE RXN LIKE '$searchRuXueNian'AND XN LIKE '$searchXianXueNian'";
 
 $courseResult = mysql_query($courseQuery, $login);
 if (!$courseResult) {
@@ -55,10 +57,13 @@ if (!empty($searchKaoShiMing)) {
 if (!empty($searchRuXueNian)) {
     $whereClause.= " AND cj.KSH IN (SELECT KSH FROM kc WHERE RXN = '". mysql_real_escape_string($searchRuXueNian). "')";
 }
+if (!empty($searchXianXueNian)) {
+    $whereClause.= " AND cj.KSH IN (SELECT KSH FROM kc WHERE XN = '". mysql_real_escape_string($searchXianXueNian). "')";
+}
 
 // 构建 SQL 查询语句
 $query_cj_rank = "SELECT cj.*, kc.KSM FROM cj 
-                  JOIN kc ON cj.KSH = kc.KSH";
+                JOIN kc ON cj.KSH = kc.KSH";
 $query_cj_rank.= " WHERE ". $whereClause;
 // 添加 ORDER BY 子句，先按考试号升序排序，再按总成绩降序排序
 $query_cj_rank.= " ORDER BY  cj.KSH ASC, cj.ZCJ Desc";
@@ -88,11 +93,12 @@ $queryString_cj_rank = '';
 if (!empty($_GET)) {
     $param_pairs = [];
     foreach ($_GET as $key => $value) {
-        // 不再排除任何参数，确保所有参数都包含在分页链接中
-        $param_pairs[] = urlencode($key). '='. urlencode($value);
+        if ($key!== 'pageNum_cj_rank') { // 排除 pageNum_cj_rank 参数，避免重复添加
+            $param_pairs[] = urlencode($key). '='. urlencode($value);
+        }
     }
     if (!empty($param_pairs)) {
-        $queryString_cj_rank = '?'. implode('&', $param_pairs);
+        $queryString_cj_rank = '&'. implode('&', $param_pairs);
     }
 }
 ?>
@@ -162,7 +168,7 @@ if (!empty($_GET)) {
         <?php endwhile;?>
     <?php endif;?>
     <div id="menu">
-        <?php if ($pageNum_cj_rank > 0 || $pageNum_cj_rank < $totalPages_cj_rank ) :?>
+        <?php if ($pageNum_cj_rank > 0 || $pageNum_cj_rank < $totalPages_cj_rank-1 ) :?>
             <div id="xzys">
         <?php endif;?>
         <?php if ($pageNum_cj_rank > 0) :?>
@@ -176,12 +182,12 @@ if (!empty($_GET)) {
             <a><img src="imgs/w.png" width="50px" height="0px"></a>
         <?php endif;?>
         <?php if ($pageNum_cj_rank+1 < $totalPages_cj_rank) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage, min($totalPages_cj_rank, $pageNum_cj_rank + 1), $queryString_cj_rank);?>"><img src="imgs/3.png" width="50px" height="50px"></a> 
+            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage, min($totalPages_cj_rank-1, $pageNum_cj_rank + 1), $queryString_cj_rank);?>"><img src="imgs/3.png" width="50px" height="50px"></a> 
         <?php else :?>
             <a><img src="imgs/w.png" width="50px" height="0px"></a>
         <?php endif;?>
         <?php if ($pageNum_cj_rank+1 < $totalPages_cj_rank) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s",  $currentPage, $totalPages_cj_rank, $queryString_cj_rank);?>"><img src="imgs/4.png" width="50px" height="50px"></a> 
+            <a href="<?php printf("%s?pageNum_cj_rank=%d%s",  $currentPage, $totalPages_cj_rank-1, $queryString_cj_rank);?>"><img src="imgs/4.png" width="50px" height="50px"></a> 
         <?php else :?>
             <a><img src="imgs/w.png" width="50px" height="0px"></a>
         <?php endif;?>

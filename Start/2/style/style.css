@@ -136,7 +136,7 @@ body {
 }
 
 #spacer {
-	width: 1800px;
+	width: 1440px;
 	border-bottom: 2px solid #000;
 	margin-bottom: 10px;
 }
@@ -158,7 +158,7 @@ body {
 }
 #title3 {
 	height: 40px;
-	width:1800px;
+	width: 1440px;
 	line-height: 38px;
 	color:rgb(0,0,0);
 	font-weight: bold;
@@ -176,7 +176,7 @@ body {
 
 .list1 {
 	height: auto;
-	width:1800px;
+	width:1440px;
 	overflow: hidden;
 	border-bottom: dashed 1px #00293C;
 	line-height: 40px;
@@ -302,6 +302,9 @@ input {
 input:hover {
     background-color: rgba(150, 150, 150, 0.5); /* 更深的背景色 */
 }
+input[type="text"] {
+	text-indent: 20px;
+}
 
 
 /* 样式化按钮 */
@@ -345,4 +348,14 @@ p {
 	flex-direction: row;
 	/* 元素在主轴上的对齐方式，这里选择居中对齐，你也可以根据需求修改为 flex-start 或 flex-end 等 */
 	gap: 10px;
+}
+#edit{
+	width: 360px;
+	display: flex;
+	/* 元素水平排列 */
+	flex-direction: column;
+	/* 元素在主轴上的对齐方式，这里选择居中对齐，你也可以根据需求修改为 flex-start 或 flex-end 等 */
+	gap: 10px;
+	flex-wrap: wrap;
+	align-content: center;
 }

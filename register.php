@@ -13,13 +13,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     switch ($grade) {  // 开始 switch 语句，检查 $a 的值
         case 1:    // 如果 $a 等于 1：
-            $level = 2025;  // 给变量 $b 赋值 2025
+            $level = 2024;  // 给变量 $b 赋值 2025
             break;      // 退出 switch 语句，避免继续执行其他的 case
         case 2:    // 如果 $a 等于 2：
-            $level = 2024;  // 给变量 $b 赋值 2024
+            $level = 2023;  // 给变量 $b 赋值 2024
             break;      // 退出 switch 语句
         case 3:
-            $level = 2023;
+            $level = 2022;
             break;
     }    
 

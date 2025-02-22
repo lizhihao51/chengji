@@ -25,6 +25,7 @@ if(!isset($_COOKIE['admin'])){
             setcookie("level",$leve,time()+3600,'/');
             setcookie("fun",$fun,time()+3600,'/');
             setcookie("bj",$bj,time()+3600,'/');
+            setcookie("time_xn",'24-25下',time()+3600,'/');
             echo"<script>url=\"../index.php\";window.location.href=url;</script>";
         } 
         else {
@@ -44,10 +45,11 @@ else
         $level = urldecode($_COOKIE['level']);
         $fun = urldecode($_COOKIE['fun']);
         $bj = urldecode($_COOKIE['bj']);
+        $time_xn = urldecode($_COOKIE['time_xn']);
         echo "cookie: ", $cookie;
         echo "cookie: ", $level;
         echo "cookie: ", $fun;
-        echo "cookie: ", $bj;
+        echo "cookie: ", $time_xn;
         echo"<script>url=\"../index.php\";window.location.href=url;</script>";
     }   
     else
@@ -57,6 +59,7 @@ else
         setcookie('level', '', time()-3600,'/');
         setcookie('fun', '', time()-3600,'/');
         setcookie('bj', '', time()-3600,'/');
+        setcookie('time_xn', '', time()-3600,'/');
         header ('Location: index.php');
         echo "<script>alert(\"您已退出\");</script>";
     }       

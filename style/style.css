@@ -229,3 +229,13 @@ ul li{
     font-size:25px;
     text-shadow: 0 5px 20px rgb(30, 255, 0);
 }
+
+#img {
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    height: 70%;
+    width: 170;
+}
+#img img {
+    margin-bottom: 20px;}

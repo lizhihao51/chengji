@@ -15,14 +15,20 @@ if(isset($_COOKIE['admin'])){
     <div class="header" id="head"><br/>学生成绩查询系统</div>
     <div id="gonggao">
         <br/>公告：</br>
-        高三级一模考试成绩已经更新（历史类除外），化/生/政/地小四门科目会出现两个成绩，前者为原始分后者为赋分后。排名会出现三个以此为 班排名/校排名/县排名</br>
-        <br>
+        高一高二级合格考成绩
+        </br>高一级原“政治”成绩位置显示本次“信息技术”成绩
+        <br>高二级原“化学”成绩位置显示本次“通用技术”成绩
+    </div>
+    <div id="img">
+    <img src="/img/kf.png"  width="150" height="150" alt="客服二维码">
+    <img src="/img/kf.png"  width="150" height="150" alt="客服二维码">
+    <img src="/img/jz.png"  width="150" height="150" alt="捐赠二维码">
     </div>
     <script>
         // 页面加载时触发输入确认
         window.onload = function() {
             // 弹出输入框，要求用户输入确认信息
-            alert("一模已经更新（历史类除外）\n化/生/政/地两个成绩，前为原始后为赋分。\n排名会三个以此为 班排名/校排名/县排名。");
+            alert("高一高二级合格考成绩\n高一级原“政治”成绩位置显示本次“信息技术”成绩\n高二级原“化学”成绩位置显示本次“通用技术”成绩");
         };
         
     </script>

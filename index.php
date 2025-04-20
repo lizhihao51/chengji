@@ -36,7 +36,7 @@ if (!isset($_COOKIE['admin'])) {
         if ($row['power'] == '2') {
             // 如果是老师
             echo "<script>var link=document.getElementById(\"kuang\");</script>";
-            echo "<script>link.src=\"Start/2.php\";</script>";
+            echo "<script>link.src=\"Start/super.php\";</script>";
         } else {
             // 如果是学生
             echo "<script>var link=document.getElementById(\"kuang\");</script>";

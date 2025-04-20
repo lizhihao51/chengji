@@ -2,16 +2,16 @@
 # FileName="Connection_php_mysql.htm"
 # Type="MYSQL"
 # HTTP="true"
-$hostname_login = "localhost";
-$database_login = "marks";
-$username_login = "root";
-$password_login = "15829931165";
-$login = mysql_connect($hostname_login, $username_login, $password_login) or trigger_error(mysql_error(),E_USER_ERROR); 
 
-$host = "localhost";
-$database = "marks";
-$username = "root";
-$password = "15829931165";
+function getDatabaseConnection() {
+    $hostname = "localhost";
+    $database = "marks";
+    $username = "root";
+    $password = "15829931165";
+    $connection = mysql_connect($hostname, $username, $password) or trigger_error(mysql_error(), E_USER_ERROR);
+    mysql_select_db($database, $connection);
+    return $connection;
+}
 
-
+$login = getDatabaseConnection();
 ?>

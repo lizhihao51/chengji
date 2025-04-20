@@ -1,31 +1,35 @@
 <?php
 // 引入配置文件，假设该文件包含数据库连接信息
-require_once('../../Connections/login.php'); 
-require_once('../../Connections/is_login.php'); 
+require_once('../../Connections/login.php');
+require_once('../../Connections/is_login.php');
+require_once('../../Connections/pagination.php');
 
-// 初始化变量
+// 获取当前页面的 URL，用于生成翻页链接
 $currentPage = $_SERVER["PHP_SELF"];
+// 每页显示的最大记录数
 $maxRows_cj_rank = 20;
+// 当前页码，默认为 0
 $pageNum_cj_rank = 0;
+// 如果 URL 中传递了页码参数，则更新当前页码
 if (isset($_GET['pageNum_cj_rank'])) {
     $pageNum_cj_rank = $_GET['pageNum_cj_rank'];
 }
+// 计算当前页数据在结果集中的起始位置
 $startRow_cj_rank = $pageNum_cj_rank * $maxRows_cj_rank;
 
 // 获取搜索框的值
-
-// $searchXingMing=$_COOKIE["admin"];
-$searchRuXueNian=$_COOKIE["level"];
-$searchXianXueNian=$_COOKIE["time_xn"];
-$searchBanJi = $_COOKIE["bj"];	//班级
-$searchKaoShiHao = isset($_GET['kaoShiHao'])? $_GET['kaoShiHao'] : '';	//考试号
-$searchKaoShiMing = isset($_GET['kaoShiMing'])? $_GET['kaoShiMing'] : '';  //考试名
+// $searchXingMing=$_COOKIE["admin"];  // 原代码中该变量未使用，暂保留注释
+$searchRuXueNian = $_COOKIE["level"];  // 入学年
+$searchXianXueNian = $_COOKIE["time_xn"];  // 现学年
+$searchBanJi = $_COOKIE["bj"]; // 班级
+$searchKaoShiHao = isset($_GET['kaoShiHao'])? $_GET['kaoShiHao'] : ''; // 考试号
+$searchKaoShiMing = isset($_GET['kaoShiMing'])? $_GET['kaoShiMing'] : '';  // 考试名
 
 // 获取课程数据
+// 选择数据库，$database_login 和 $login 应在 login.php 中定义
 mysql_select_db($database_login, $login);
-// 根据入学年筛选课程数据
-$courseQuery = "SELECT * FROM kc WHERE RXN LIKE '$searchRuXueNian'AND XN LIKE '$searchXianXueNian'";
-
+// 根据入学年和现学年筛选课程数据
+$courseQuery = "SELECT * FROM kc WHERE RXN LIKE '$searchRuXueNian' AND XN LIKE '$searchXianXueNian'";
 $courseResult = mysql_query($courseQuery, $login);
 if (!$courseResult) {
     die("课程数据查询失败: ". mysql_error());
@@ -39,7 +43,7 @@ if (!$classResult) {
     die("班级数据查询失败: ". mysql_error());
 }
 
-// 构建 WHERE 子句
+// 构建 WHERE 子句，用于筛选成绩数据
 $whereClause = '1 = 1';
 if (!empty($searchKaoShiHao)) {
     $whereClause.= " AND cj.KSH = '". mysql_real_escape_string($searchKaoShiHao). "'";
@@ -60,7 +64,7 @@ if (!empty($searchXianXueNian)) {
     $whereClause.= " AND cj.KSH IN (SELECT KSH FROM kc WHERE XN = '". mysql_real_escape_string($searchXianXueNian). "')";
 }
 
-// 构建 SQL 查询语句
+// 构建 SQL 查询语句，获取成绩数据并关联课程名称
 $query_cj_rank = "SELECT cj.*, kc.KSM FROM cj 
                   JOIN kc ON cj.KSH = kc.KSH";
 $query_cj_rank.= " WHERE ". $whereClause;
@@ -74,12 +78,11 @@ if (!$allResult) {
     die("总记录数查询失败: ". mysql_error());
 }
 $totalRows_cj_rank = mysql_num_rows($allResult);
+// 计算总页数
 $totalPages_cj_rank = ceil($totalRows_cj_rank / $maxRows_cj_rank);
-
 
 // 再添加 LIMIT 子句进行分页查询
 $query_limit_cj_rank = $query_cj_rank. " LIMIT ". $startRow_cj_rank. ", ". $maxRows_cj_rank;
-
 
 // 执行分页查询
 $result = mysql_query($query_limit_cj_rank, $login);
@@ -87,13 +90,12 @@ if (!$result) {
     die("查询失败: ". mysql_error());
 }
 
-
-// 构建查询字符串，用于分页链接
+// 构建查询字符串，用于分页链接，排除页码参数，避免重复添加
 $queryString_cj_rank = '';
 if (!empty($_GET)) {
     $param_pairs = [];
     foreach ($_GET as $key => $value) {
-        if ($key!== 'pageNum_cj_rank') { // 排除 pageNum_cj_rank 参数，避免重复添加
+        if ($key!== 'pageNum_cj_rank') { 
             $param_pairs[] = urlencode($key). '='. urlencode($value);
         }
     }
@@ -108,7 +110,7 @@ if (!empty($_GET)) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>管理员默认页</title>
+<title>班级成绩</title>
 <link href="style/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -167,32 +169,10 @@ if (!empty($_GET)) {
             </div>
         <?php endwhile;?>
     <?php endif;?>
-    <div id="menu">
-        <?php if ($pageNum_cj_rank > 0 || $pageNum_cj_rank < $totalPages_cj_rank-1 ) :?>
-            <div id="xzys">
-        <?php endif;?>
-        <?php if ($pageNum_cj_rank > 0) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage,  0, $queryString_cj_rank);?>"><img src="imgs/1.png" width="50px" height="50px"></a> 
-        <?php else :?>
-            <a><img src="imgs/w.png" width="50px" height="0px"></a>
-        <?php endif;?>
-        <?php if ($pageNum_cj_rank > 0) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage,  max(0, $pageNum_cj_rank - 1), $queryString_cj_rank);?>"><img src="imgs/2.png" width="50px" height="50px"></a> 
-        <?php else :?>
-            <a><img src="imgs/w.png" width="50px" height="0px"></a>
-        <?php endif;?>
-        <?php if ($pageNum_cj_rank+1 < $totalPages_cj_rank) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage, min($totalPages_cj_rank-1, $pageNum_cj_rank + 1), $queryString_cj_rank);?>"><img src="imgs/3.png" width="50px" height="50px"></a> 
-        <?php else :?>
-            <a><img src="imgs/w.png" width="50px" height="0px"></a>
-        <?php endif;?>
-        <?php if ($pageNum_cj_rank+1 < $totalPages_cj_rank) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s",  $currentPage, $totalPages_cj_rank-1, $queryString_cj_rank);?>"><img src="imgs/4.png" width="50px" height="50px"></a> 
-        <?php else :?>
-            <a><img src="imgs/w.png" width="50px" height="0px"></a>
-        <?php endif;?>
-        </div>
-    </div>
+    <?php
+    // 这里调用了 PaginationHelper 类的方法生成翻页链接，假设 PaginationHelper 类已定义
+    echo PaginationHelper::getPaginationLinks($currentPage, $pageNum_cj_rank, $totalPages_cj_rank, $queryString_cj_rank);
+    ?>
 </div>
 </body>
 </html>

@@ -2,6 +2,8 @@
 // 引入配置文件，假设该文件包含数据库连接信息
 require_once('../../Connections/login.php'); 
 require_once('../../Connections/is_login.php'); 
+require_once('../../Connections/pagination.php'); 
+
 
 // 初始化变量
 $currentPage = $_SERVER["PHP_SELF"];
@@ -167,32 +169,10 @@ if (!empty($_GET)) {
             </div>
         <?php endwhile;?>
     <?php endif;?>
-    <div id="menu">
-        <?php if ($pageNum_cj_rank > 0 || $pageNum_cj_rank < $totalPages_cj_rank-1 ) :?>
-            <div id="xzys">
-        <?php endif;?>
-        <?php if ($pageNum_cj_rank > 0) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage,  0, $queryString_cj_rank);?>"><img src="imgs/1.png" width="50px" height="50px"></a> 
-        <?php else :?>
-            <a><img src="imgs/w.png" width="50px" height="0px"></a>
-        <?php endif;?>
-        <?php if ($pageNum_cj_rank > 0) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage,  max(0, $pageNum_cj_rank - 1), $queryString_cj_rank);?>"><img src="imgs/2.png" width="50px" height="50px"></a> 
-        <?php else :?>
-            <a><img src="imgs/w.png" width="50px" height="0px"></a>
-        <?php endif;?>
-        <?php if ($pageNum_cj_rank+1 < $totalPages_cj_rank) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s", $currentPage, min($totalPages_cj_rank-1, $pageNum_cj_rank + 1), $queryString_cj_rank);?>"><img src="imgs/3.png" width="50px" height="50px"></a> 
-        <?php else :?>
-            <a><img src="imgs/w.png" width="50px" height="0px"></a>
-        <?php endif;?>
-        <?php if ($pageNum_cj_rank+1 < $totalPages_cj_rank) :?>
-            <a href="<?php printf("%s?pageNum_cj_rank=%d%s",  $currentPage, $totalPages_cj_rank-1, $queryString_cj_rank);?>"><img src="imgs/4.png" width="50px" height="50px"></a> 
-        <?php else :?>
-            <a><img src="imgs/w.png" width="50px" height="0px"></a>
-        <?php endif;?>
-        </div>
-    </div>
+    <?php
+    // 这里调用了 PaginationHelper 类的方法生成翻页链接，假设 PaginationHelper 类已定义
+    echo PaginationHelper::getPaginationLinks($currentPage, $pageNum_cj_rank, $totalPages_cj_rank, $queryString_cj_rank);
+    ?>
 </div>
 </body>
 </html>

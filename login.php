@@ -15,9 +15,9 @@ if(isset($_COOKIE['admin'])){
     <div class="header" id="head"><br/>学生成绩查询系统</div>
     <div id="gonggao">
         <br/>公告：</br>
-        高一高二级合格考成绩
-        </br>高一级原“政治”成绩位置显示本次“信息技术”成绩
-        <br>高二级原“化学”成绩位置显示本次“通用技术”成绩
+        二模成绩已更新！！！
+        </br>分数会出现两个
+        <br>前 / 后 === 赋分前 / 赋分后
     </div>
     <div id="img">
     <img src="/img/kf.png"  width="150" height="150" alt="客服二维码">
@@ -28,7 +28,7 @@ if(isset($_COOKIE['admin'])){
         // 页面加载时触发输入确认
         window.onload = function() {
             // 弹出输入框，要求用户输入确认信息
-            alert("高一高二级合格考成绩\n高一级原“政治”成绩位置显示本次“信息技术”成绩\n高二级原“化学”成绩位置显示本次“通用技术”成绩");
+            alert("二模成绩已更新\n分数会出现两个\n前 / 后 === 赋分前 / 赋分后");
         };
         
     </script>
